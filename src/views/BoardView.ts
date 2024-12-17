@@ -1,9 +1,11 @@
 import { lego } from '@armathai/lego';
 import { Container, Rectangle, Sprite } from 'pixi.js';
 import { Images } from '../assets';
+import { ZONES_POSITIONS } from '../configs/zonesConfig';
 import { GameModelEvents } from '../events/ModelEvents';
 import { GameState } from '../models/GameModel';
 import { lp, makeSprite } from '../utils';
+import { Zone } from './Zone';
 
 const BOUNDS_L = {
     x: -300,
@@ -18,6 +20,7 @@ const BOUNDS_P = {
     w: 600,
     h: 1200,
 };
+
 export class BoardView extends Container {
     private bkg: Sprite;
 
@@ -44,11 +47,21 @@ export class BoardView extends Container {
 
     private build(): void {
         this.buildBkg();
+
+        this.buildLines();
     }
 
     private buildBkg(): void {
         this.bkg = makeSprite({ texture: Images['game/bkg'] });
         this.addChild(this.bkg);
+    }
+
+    private buildLines(): void {
+        ZONES_POSITIONS.forEach((zoneData, i) => {
+            const zone = new Zone(i + 1);
+            zone.position.set(zoneData.x, zoneData.y);
+            this.addChild(zone);
+        });
     }
 
     private onGameStateUpdate(state: GameState): void {
