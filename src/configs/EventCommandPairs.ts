@@ -1,15 +1,16 @@
 import { lego } from '@armathai/lego';
 import { BoardEvents, MainGameEvents, SoundEvents, TakeMe, UIEvents } from '../events/MainEvents';
-import { AdModelEvents, GameModelEvents } from '../events/ModelEvents';
+import { AdModelEvents, BoardModelEvents, GameModelEvents } from '../events/ModelEvents';
 import {
     onAdStatusUpdateCommand,
+    onBoardStateUpdateCommand,
     onGameStateUpdateCommand,
     onMainViewReadyCommand,
     onSoundToggleCommand,
     resizeCommand,
     takeToStoreCommand,
 } from './Commands';
-import { onCardClickCommand, onZoneClickedCommand } from './GameCommands';
+import { onCardClickCommand, onLockClickCommand, onZoneClickedCommand } from './GameCommands';
 
 export const mapCommands = () => {
     eventCommandPairs.forEach(({ event, command }) => {
@@ -55,5 +56,13 @@ const eventCommandPairs = Object.freeze([
     {
         event: UIEvents.CardClick,
         command: onCardClickCommand,
+    },
+    {
+        event: BoardEvents.LockClick,
+        command: onLockClickCommand,
+    },
+    {
+        event: BoardModelEvents.StateUpdate,
+        command: onBoardStateUpdateCommand,
     },
 ]);

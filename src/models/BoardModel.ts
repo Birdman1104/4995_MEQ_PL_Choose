@@ -60,6 +60,10 @@ export class BoardModel extends ObservableModel {
         this._selectedZone = value;
     }
 
+    public setState(state: BoardState): void {
+        this.state = state;
+    }
+
     public getZoneByNumber(zoneNumber: number): ZoneModel | undefined {
         return this.zones.find((zone) => zone.zoneNumber === zoneNumber);
     }
@@ -84,10 +88,10 @@ export class BoardModel extends ObservableModel {
 
     public initialize(): void {
         this.state = BoardState.Intro;
-        this.initializeZones();
+        // this.initializeZones();
     }
 
-    private initializeZones(): void {
+    public initializeZones(): void {
         const arr: ZoneModel[] = [];
         ZONES_POSITIONS.forEach(({ x, y }, i) => {
             const zone = new ZoneModel(i + 1, x, y);

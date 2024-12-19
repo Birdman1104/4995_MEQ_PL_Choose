@@ -1,3 +1,5 @@
+import { LockArea } from '../views/Lock';
+
 export const ZONES_POSITIONS = [
     { x: -95, y: -30 }, // big wall
     { x: 33, y: -48 }, // square wall
@@ -37,3 +39,11 @@ export const ITEMS_CONFIG = {
     zone_5_4: { x: 0, y: -10, price: 750 },
     zone_5_5: { x: 0, y: -10, price: 800 },
 };
+
+export const LOCKS = [
+    { x: -10, y: 30, area: LockArea.MainRoom },
+    { x: 160, y: -110, area: LockArea.Storage },
+    { x: -290, y: -80, area: LockArea.Lock1 },
+    { x: -140, y: -150, area: LockArea.Lock2 },
+    { x: 0, y: -220, area: LockArea.Lock3 },
+];

@@ -1,4 +1,5 @@
 import { lego } from '@armathai/lego';
+import anime from 'animejs';
 import { Container, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { getFurnitureSpriteConfig, getLineSpriteConfig, plusSpriteConfig } from '../configs/spriteConfigs';
@@ -14,7 +15,15 @@ export class Zone extends Container {
     constructor(private config: ZoneModel) {
         super();
 
+        this.alpha = 0;
         this.build();
+
+        anime({
+            targets: this,
+            alpha: 1,
+            duration: 200,
+            easing: 'linear',
+        });
     }
 
     get zoneNumber(): number {

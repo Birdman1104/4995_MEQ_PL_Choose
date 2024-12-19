@@ -1,5 +1,6 @@
 import { lego } from '@armathai/lego';
 import { AdStatus } from '../models/AdModel';
+import { BoardState } from '../models/BoardModel';
 import { GameState } from '../models/GameModel';
 import Head from '../models/HeadModel';
 import { HintState } from '../models/HintModel';
@@ -111,10 +112,25 @@ const showCtaCommand = (): void => Head.ad?.cta?.show();
 
 const turnOffTutorialModeCommand = (): void => Head.gameModel?.turnOffTutorialMode();
 
+export const setBoardStateCommand = (state: BoardState): void => {
+    Head.gameModel?.board?.setState(state);
+};
+
 export const onGameStateUpdateCommand = (state: GameState): void => {
     switch (state) {
         case GameState.Idle:
             //
+            break;
+
+        default:
+            break;
+    }
+};
+
+export const onBoardStateUpdateCommand = (state: BoardState): void => {
+    switch (state) {
+        case BoardState.ClickOnRoom:
+            Head.gameModel?.board?.initializeZones();
             break;
 
         default:

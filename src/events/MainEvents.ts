@@ -11,6 +11,7 @@ export const MainGameEvents = {
 
 export const BoardEvents = {
     ZoneClicked: 'BoardEventsZoneClicked',
+    LockClick: 'BoardEventsLockClick',
 };
 
 export const UIEvents = {

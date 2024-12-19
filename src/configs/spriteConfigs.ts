@@ -16,7 +16,7 @@ export const getLineSpriteConfig = (zoneNumber): SpriteConfig => {
 export const plusSpriteConfig: SpriteConfig = {
     texture: Images['ui/plus'],
     anchor: new Point(0.5, 0.5),
-    scale: new Point(1.2, 1.2),
+    scale: new Point(0.75, 0.75),
 };
 
 export const getArrowConfig = (side: 'left' | 'right') => {
