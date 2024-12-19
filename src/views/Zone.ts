@@ -1,7 +1,6 @@
 import { lego } from '@armathai/lego';
 import { Container, Point, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
-import { ITEMS_POSITIONS } from '../configs/zonesConfig';
 import { BoardEvents } from '../events/MainEvents';
 import { ZoneModel } from '../models/ZoneModel';
 import { makeSprite } from '../utils';
@@ -33,9 +32,8 @@ export class Zone extends Container {
         this.line.interactive = false;
     }
 
-    public buildFurniture(type): void {
+    public buildFurniture({ x, y, type }): void {
         const itemName = `zone_${this.zoneNumber}_${type}`;
-        const { x, y } = ITEMS_POSITIONS[itemName];
         const texture = Images[`interior/${itemName}`];
 
         if (this.furniture) {
@@ -53,7 +51,7 @@ export class Zone extends Container {
     private build(): void {
         this.buildLines();
 
-        this.config.type ? this.buildFurniture(this.config.type) : this.buildPlus();
+        this.config.selectedItem ? this.buildFurniture(this.config.selectedItem) : this.buildPlus();
     }
 
     private buildLines(): void {
