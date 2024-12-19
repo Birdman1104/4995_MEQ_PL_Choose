@@ -10,7 +10,7 @@ export const MainGameEvents = {
 };
 
 export const BoardEvents = {
-    //
+    ZoneClicked: 'BoardEventsZoneClicked',
 };
 
 export const TakeMe = {

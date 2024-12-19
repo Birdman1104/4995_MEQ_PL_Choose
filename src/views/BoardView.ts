@@ -1,9 +1,10 @@
 import { lego } from '@armathai/lego';
 import { Container, Rectangle, Sprite } from 'pixi.js';
 import { Images } from '../assets';
-import { ZONES_POSITIONS } from '../configs/zonesConfig';
-import { GameModelEvents } from '../events/ModelEvents';
+import { BoardModelEvents, GameModelEvents } from '../events/ModelEvents';
+import { BoardState } from '../models/BoardModel';
 import { GameState } from '../models/GameModel';
+import { ZoneModel } from '../models/ZoneModel';
 import { lp, makeSprite } from '../utils';
 import { Zone } from './Zone';
 
@@ -27,7 +28,10 @@ export class BoardView extends Container {
     constructor() {
         super();
 
-        lego.event.on(GameModelEvents.StateUpdate, this.onGameStateUpdate, this);
+        lego.event
+            .on(GameModelEvents.StateUpdate, this.onGameStateUpdate, this)
+            .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this)
+            .on(BoardModelEvents.ZonesUpdate, this.onZonesUpdate, this);
 
         this.build();
     }
@@ -47,8 +51,6 @@ export class BoardView extends Container {
 
     private build(): void {
         this.buildBkg();
-
-        this.buildLines();
     }
 
     private buildBkg(): void {
@@ -56,10 +58,14 @@ export class BoardView extends Container {
         this.addChild(this.bkg);
     }
 
-    private buildLines(): void {
-        ZONES_POSITIONS.forEach((zoneData, i) => {
-            const zone = new Zone(i + 1);
-            zone.position.set(zoneData.x, zoneData.y);
+    private onBoardStateUpdate(state: BoardState): void {
+        console.warn(BoardState[state]);
+    }
+
+    private onZonesUpdate(zones: ZoneModel[]): void {
+        zones.forEach((z) => {
+            const zone = new Zone(z);
+            zone.position.set(z.x, z.y);
             this.addChild(zone);
         });
     }

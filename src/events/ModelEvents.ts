@@ -5,18 +5,7 @@ export const AdModelEvents = {
     HintUpdate: 'AdModelHintUpdate',
 };
 
-export const BoardModelEvents = {
-    ActiveCardUpdate: 'BoardModelActiveCardUpdate',
-    CardsUpdate: 'BoardModelCardsUpdate',
-    TypedTextUpdate: 'BoardModelTypedTextUpdate',
-    IsGameOverUpdate: 'BoardModelIsGameOverUpdate',
-};
-
-export const CardModelEvents = {
-    AnswersRemainingUpdate: 'CardModelAnswersRemainingUpdate',
-    CompletedUpdate: 'CardModelCompletedUpdate',
-    InteractivityUpdate: 'CardModelInteractivityUpdate',
-};
+export const BoardModelEvents = { StateUpdate: 'BoardModelStateUpdate', ZonesUpdate: 'BoardModelZonesUpdate' };
 
 export const CtaModelEvents = { VisibleUpdate: 'CtaModelVisibleUpdate' };
 
@@ -31,3 +20,9 @@ export const HeadModelEvents = { GameModelUpdate: 'HeadModelGameModelUpdate', Ad
 export const HintModelEvents = { StateUpdate: 'HintModelStateUpdate', VisibleUpdate: 'HintModelVisibleUpdate' };
 
 export const SoundModelEvents = { StateUpdate: 'SoundModelStateUpdate' };
+
+export const ZoneModelEvents = {
+    SelectedUpdate: 'ZoneModelSelectedUpdate',
+    TypeUpdate: 'ZoneModelTypeUpdate',
+    CompletedUpdate: 'ZoneModelCompletedUpdate',
+};
