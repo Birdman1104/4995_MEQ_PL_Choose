@@ -39,6 +39,11 @@ const getGameViewGridPortraitConfig = () => {
                 scale: CellScale.fit,
                 bounds: { x: 0, y: 0, width: 1, height: 1 },
             },
+            {
+                name: 'zone_5',
+                scale: CellScale.fit,
+                bounds: { x: -0.3, y: 0, width: 1, height: 1 },
+            },
         ],
     };
 };

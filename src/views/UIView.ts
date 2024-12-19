@@ -1,5 +1,6 @@
 import { ICellConfig, PixiGrid } from '@armathai/pixi-grid';
 import { getUIGridConfig } from '../configs/gridConfigs/UIViewGC';
+import { Carousel } from './Carousel';
 
 export class UIView extends PixiGrid {
     constructor() {
@@ -17,6 +18,7 @@ export class UIView extends PixiGrid {
     }
 
     private build(): void {
-        //
+        const carousel = new Carousel();
+        this.setChild('slider', carousel);
     }
 }

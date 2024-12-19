@@ -51,6 +51,7 @@ export const assets = {
         'lines/line3.png': require('../assets/images/lines/line3.png').default,
         'lines/line4.png': require('../assets/images/lines/line4.png').default,
         'lines/line5.png': require('../assets/images/lines/line5.png').default,
+        'ui/arrow.png': require('../assets/images/ui/arrow.png').default,
         'ui/button_no.png': require('../assets/images/ui/button_no.png').default,
         'ui/button_ok.png': require('../assets/images/ui/button_ok.png').default,
         'ui/buttons_bg.png': require('../assets/images/ui/buttons_bg.png').default,
@@ -61,7 +62,6 @@ export const assets = {
         'ui/money.png': require('../assets/images/ui/money.png').default,
         'ui/plus.png': require('../assets/images/ui/plus.png').default,
         'ui/progress.png': require('../assets/images/ui/progress.png').default,
-        'ui/quests_arrow_1.png': require('../assets/images/ui/quests_arrow_1.png').default,
     },
     particles: {},
     sounds: {},
@@ -119,6 +119,7 @@ export const Images = {
     'lines/line3': 'lines/line3.png',
     'lines/line4': 'lines/line4.png',
     'lines/line5': 'lines/line5.png',
+    'ui/arrow': 'ui/arrow.png',
     'ui/button_no': 'ui/button_no.png',
     'ui/button_ok': 'ui/button_ok.png',
     'ui/buttons_bg': 'ui/buttons_bg.png',
@@ -129,7 +130,6 @@ export const Images = {
     'ui/money': 'ui/money.png',
     'ui/plus': 'ui/plus.png',
     'ui/progress': 'ui/progress.png',
-    'ui/quests_arrow_1': 'ui/quests_arrow_1.png',
 };
 
 export const Sounds = {};
