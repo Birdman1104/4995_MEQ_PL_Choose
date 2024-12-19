@@ -1,6 +1,7 @@
 import { lego } from '@armathai/lego';
-import { Container, Point, Sprite, Texture } from 'pixi.js';
+import { Container, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
+import { getFurnitureSpriteConfig, getLineSpriteConfig, plusSpriteConfig } from '../configs/spriteConfigs';
 import { BoardEvents } from '../events/MainEvents';
 import { ZoneModel } from '../models/ZoneModel';
 import { makeSprite } from '../utils';
@@ -38,17 +39,12 @@ export class Zone extends Container {
     }
 
     public buildFurniture({ x, y, type }): void {
-        const itemName = `zone_${this.zoneNumber}_${type}`;
-        const texture = Images[`interior/${itemName}`];
+        const texture = Images[`interior/zone_${this.zoneNumber}_${type}`];
 
         if (this.furniture) {
             this.furniture.texture = Texture.from(texture);
         } else {
-            this.furniture = makeSprite({
-                texture,
-                anchor: new Point(0.5, 0.5),
-                position: new Point(x, y),
-            });
+            this.furniture = makeSprite(getFurnitureSpriteConfig(texture, x, y));
             this.addChild(this.furniture);
         }
     }
@@ -60,7 +56,7 @@ export class Zone extends Container {
     }
 
     private buildLines(): void {
-        this.line = makeSprite({ texture: Images[`lines/line${this.zoneNumber}`], anchor: new Point(0.5, 0.5) });
+        this.line = makeSprite(getLineSpriteConfig(this.zoneNumber));
         this.line.interactive = true;
         this.line.on('pointerdown', () => {
             lego.event.emit(BoardEvents.ZoneClicked, this.zoneNumber);
@@ -69,8 +65,7 @@ export class Zone extends Container {
     }
 
     private buildPlus(): void {
-        this.plus = makeSprite({ texture: Images['ui/plus'], anchor: new Point(0.5, 0.5) });
-        this.plus.scale.set(1.2);
+        this.plus = makeSprite(plusSpriteConfig);
         this.addChild(this.plus);
     }
 }

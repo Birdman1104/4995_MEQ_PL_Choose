@@ -1,22 +1,13 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
-import { Container, Graphics, Point, Rectangle, Sprite } from 'pixi.js';
-import { Images } from '../assets';
+import { Container, Graphics, Rectangle, Sprite } from 'pixi.js';
+import { getArrowConfig } from '../configs/spriteConfigs';
 import { UIEvents } from '../events/MainEvents';
 import { makeSprite } from '../utils';
 import { ChoiceCard } from './ChoiceCard';
 
 const W = 80;
 const OFFSET = 100;
-
-const getArrowConfig = (side: 'left' | 'right') => {
-    return {
-        texture: Images['ui/arrow'],
-        anchor: new Point(0.5, 0.5),
-        position: new Point(200 * (side === 'left' ? -1 : 1), 0),
-        scale: new Point(1 * (side === 'left' ? 1 : -1), 1),
-    };
-};
 
 export class Carousel extends Container {
     private rightArrow: Sprite;

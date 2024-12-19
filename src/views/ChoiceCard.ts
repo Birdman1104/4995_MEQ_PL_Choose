@@ -1,19 +1,7 @@
-import { Container, Point, Rectangle, Sprite, Text } from 'pixi.js';
+import { Container, Rectangle, Sprite, Text } from 'pixi.js';
 import { Images } from '../assets';
+import { cardBkgSpriteConfig, getItemSpriteConfig, moneySpriteConfig } from '../configs/spriteConfigs';
 import { makeSprite } from '../utils';
-
-const bkgConfig = {
-    texture: Images['ui/choice_bg'],
-    scale: new Point(1.5, 1.5),
-    anchor: new Point(0.5, 0.5),
-};
-
-const moneyConfig = {
-    texture: Images['ui/money'],
-    anchor: new Point(0.5, 0.5),
-    position: new Point(-25, 37),
-    scale: new Point(0.6, 0.6),
-};
 
 export class ChoiceCard extends Container {
     private bkg: Sprite;
@@ -41,11 +29,7 @@ export class ChoiceCard extends Container {
 
         this.item && this.item.destroy();
 
-        this.item = makeSprite({
-            texture,
-            anchor: new Point(0.5, 0.5),
-            position: new Point(0, -20),
-        });
+        this.item = makeSprite(getItemSpriteConfig(texture));
         this.item.scale.set(this.getItemScale());
         this.addChild(this.item);
 
@@ -60,7 +44,7 @@ export class ChoiceCard extends Container {
     }
 
     private buildBkg(): void {
-        this.bkg = makeSprite(bkgConfig);
+        this.bkg = makeSprite(cardBkgSpriteConfig);
         this.bkg.interactive = true;
         this.bkg.on('pointerdown', () => {
             this.emit('cardClick', this.uuid);
@@ -69,7 +53,7 @@ export class ChoiceCard extends Container {
     }
 
     private buildMoneyIcon(): void {
-        this.moneyIcon = makeSprite(moneyConfig);
+        this.moneyIcon = makeSprite(moneySpriteConfig);
         this.addChild(this.moneyIcon);
     }
 
