@@ -1,7 +1,10 @@
+import { lego } from '@armathai/lego';
 import anime from 'animejs';
 import { Container, Graphics, Point, Rectangle, Sprite } from 'pixi.js';
 import { Images } from '../assets';
+import { UIEvents } from '../events/MainEvents';
 import { makeSprite } from '../utils';
+import { ChoiceCard } from './ChoiceCard';
 
 const W = 80;
 const OFFSET = 100;
@@ -20,7 +23,7 @@ export class Carousel extends Container {
     private leftArrow: Sprite;
     private carouselContainer: Container;
     private itemsData: any[] = [1, 1, 1, 1, 1];
-    private items: Sprite[] = [];
+    private items: ChoiceCard[] = [];
     private maskGr: Graphics;
 
     private currentIndex = 0;
@@ -37,8 +40,13 @@ export class Carousel extends Container {
         return new Rectangle(-300, -100, 600, 200);
     }
 
-    public updateItemsData(data: any[]): void {
+    public updateItemsData(data: { img: string; price: number; uuid: string }[]): void {
         this.itemsData = data;
+
+        this.items.forEach((item, index) => {
+            const { img, price, uuid } = this.itemsData[index];
+            item.updateItem(img, price, uuid);
+        });
     }
 
     private build(): void {
@@ -54,13 +62,11 @@ export class Carousel extends Container {
         this.carouselContainer.mask = this.maskGr;
 
         for (let i = 0; i < 5; i++) {
-            const item = makeSprite({
-                texture: Images[`ui/choice_bg`],
-                anchor: new Point(0.5, 0.5),
-
-                scale: new Point(1.5, 1.5),
-            });
+            const item = new ChoiceCard();
             item.position.set((i - this.itemsData.length / 2) * (item.width + OFFSET), 0);
+            item.on('cardClick', (uuid) => {
+                lego.event.emit(UIEvents.CardClick, uuid);
+            });
             this.items.push(item);
             this.carouselContainer.addChild(item);
         }

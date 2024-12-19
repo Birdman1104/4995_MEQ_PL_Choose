@@ -72,8 +72,14 @@ export class BoardModel extends ObservableModel {
             return;
         }
 
-        this._selectedZone = zone;
         this._selectedZoneNumber = zone.zoneNumber;
+        this._selectedZone = zone;
+    }
+
+    public updateSelectedItem(uuid: string): void {
+        if (!this.selectedZone) return;
+
+        this.selectedZone.updateSelectedItem(uuid);
     }
 
     public initialize(): void {

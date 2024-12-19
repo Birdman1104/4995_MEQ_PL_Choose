@@ -48,8 +48,12 @@ export class ZoneModel extends ObservableModel {
         return this._selectedItem;
     }
 
-    public updateSelectedItem(type: number): void {
-        const item = this._availableItems.find((i) => i.type === type);
+    public set selectedItem(value: ItemModel | null) {
+        this._selectedItem = value;
+    }
+
+    public updateSelectedItem(uuid: string): void {
+        const item = this._availableItems.find((i) => i.uuid === uuid);
         if (!item) return;
         this._selectedItem = item;
     }

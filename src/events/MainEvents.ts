@@ -13,6 +13,10 @@ export const BoardEvents = {
     ZoneClicked: 'BoardEventsZoneClicked',
 };
 
+export const UIEvents = {
+    CardClick: 'UIEventsCardClick',
+};
+
 export const TakeMe = {
     ToStore: 'TakeMeToStore',
 };

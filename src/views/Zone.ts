@@ -32,6 +32,10 @@ export class Zone extends Container {
         this.line.interactive = false;
     }
 
+    public removePlusSign(): void {
+        this.plus.destroy();
+    }
+
     public buildFurniture({ x, y, type }): void {
         const itemName = `zone_${this.zoneNumber}_${type}`;
         const texture = Images[`interior/${itemName}`];
@@ -42,10 +46,10 @@ export class Zone extends Container {
             this.furniture = makeSprite({
                 texture,
                 anchor: new Point(0.5, 0.5),
+                position: new Point(x, y),
             });
-            this.furniture.position.set(x, y);
+            this.addChild(this.furniture);
         }
-        this.addChild(this.furniture);
     }
 
     private build(): void {

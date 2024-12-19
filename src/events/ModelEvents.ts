@@ -26,4 +26,7 @@ export const HintModelEvents = { StateUpdate: 'HintModelStateUpdate', VisibleUpd
 
 export const SoundModelEvents = { StateUpdate: 'SoundModelStateUpdate' };
 
-export const ZoneModelEvents = { TypeUpdate: 'ZoneModelTypeUpdate', CompletedUpdate: 'ZoneModelCompletedUpdate' };
+export const ZoneModelEvents = {
+    CompletedUpdate: 'ZoneModelCompletedUpdate',
+    SelectedItemUpdate: 'ZoneModelSelectedItemUpdate',
+};
