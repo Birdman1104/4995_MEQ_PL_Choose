@@ -19,6 +19,8 @@ export enum BoardState {
 export class BoardModel extends ObservableModel {
     private _state: BoardState = BoardState.Unknown;
     private _zones: ZoneModel[] = [];
+    private _selectedZoneNumber: number;
+    private _selectedZone: ZoneModel | null;
 
     constructor() {
         super('BoardModel');
@@ -40,6 +42,38 @@ export class BoardModel extends ObservableModel {
 
     set zones(value: ZoneModel[]) {
         this._zones = value;
+    }
+
+    get selectedZoneNumber(): number {
+        return this._selectedZoneNumber;
+    }
+
+    set selectedZoneNumber(value: number) {
+        this._selectedZoneNumber = value;
+    }
+
+    get selectedZone(): ZoneModel | null {
+        return this._selectedZone;
+    }
+
+    set selectedZone(value: ZoneModel | null) {
+        this._selectedZone = value;
+    }
+
+    public getZoneByNumber(zoneNumber: number): ZoneModel | undefined {
+        return this.zones.find((zone) => zone.zoneNumber === zoneNumber);
+    }
+
+    public selectZone(zoneNumber: number): void {
+        const zone = this.getZoneByNumber(zoneNumber);
+        if (!zone) {
+            this._selectedZone = null;
+            this._selectedZoneNumber = -1;
+            return;
+        }
+
+        this._selectedZone = zone;
+        this._selectedZoneNumber = zone.zoneNumber;
     }
 
     public initialize(): void {

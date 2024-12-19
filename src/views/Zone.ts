@@ -52,7 +52,6 @@ export class Zone extends Container {
 
     private build(): void {
         this.buildLines();
-        console.warn(this.config.type);
 
         this.config.type ? this.buildFurniture(this.config.type) : this.buildPlus();
     }
@@ -62,7 +61,6 @@ export class Zone extends Container {
         this.line.interactive = true;
         this.line.on('pointerdown', () => {
             lego.event.emit(BoardEvents.ZoneClicked, this.zoneNumber);
-            console.warn('Zone clicked', this.zoneNumber);
         });
         this.addChild(this.line);
     }

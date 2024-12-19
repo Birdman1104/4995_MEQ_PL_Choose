@@ -1,7 +1,7 @@
 import { lego } from '@armathai/lego';
 import { ICellConfig, PixiGrid } from '@armathai/pixi-grid';
 import { getGameViewGridConfig } from '../configs/gridConfigs/GameViewGC';
-import { GameModelEvents, HintModelEvents } from '../events/ModelEvents';
+import { BoardModelEvents, GameModelEvents, HintModelEvents } from '../events/ModelEvents';
 import { BoardModel } from '../models/BoardModel';
 import { HintState } from '../models/HintModel';
 import { BoardView } from './BoardView';
@@ -14,6 +14,7 @@ export class GameView extends PixiGrid {
 
         lego.event
             .on(GameModelEvents.BoardUpdate, this.onBoardUpdate, this)
+            .on(BoardModelEvents.SelectedZoneNumberUpdate, this.onSelectedZoneNumberUpdate, this)
             .on(HintModelEvents.StateUpdate, this.onHintStateUpdate, this);
         this.build();
     }
@@ -49,5 +50,10 @@ export class GameView extends PixiGrid {
 
     private destroyBoard(): void {
         this.board.destroy();
+    }
+
+    private onSelectedZoneNumberUpdate(zoneNumber: number): void {
+        const cell = zoneNumber === -1 ? 'board' : `zone_${zoneNumber}`;
+        // tweenToCell(this, this.board, cell);
     }
 }

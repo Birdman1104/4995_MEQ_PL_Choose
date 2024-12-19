@@ -9,7 +9,6 @@ export enum ItemType {
 }
 
 export class ZoneModel extends ObservableModel {
-    private _selected = false;
     private _type: ItemType;
     private _completed = false;
 
@@ -28,14 +27,6 @@ export class ZoneModel extends ObservableModel {
 
     public get zoneNumber(): number {
         return this._zoneNumber;
-    }
-
-    public get selected(): boolean {
-        return this._selected;
-    }
-
-    public set selected(value: boolean) {
-        this._selected = value;
     }
 
     public get type(): ItemType {

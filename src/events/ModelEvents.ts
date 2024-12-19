@@ -5,7 +5,12 @@ export const AdModelEvents = {
     HintUpdate: 'AdModelHintUpdate',
 };
 
-export const BoardModelEvents = { StateUpdate: 'BoardModelStateUpdate', ZonesUpdate: 'BoardModelZonesUpdate' };
+export const BoardModelEvents = {
+    StateUpdate: 'BoardModelStateUpdate',
+    ZonesUpdate: 'BoardModelZonesUpdate',
+    SelectedZoneNumberUpdate: 'BoardModelSelectedZoneNumberUpdate',
+    SelectedZoneUpdate: 'BoardModelSelectedZoneUpdate',
+};
 
 export const CtaModelEvents = { VisibleUpdate: 'CtaModelVisibleUpdate' };
 
@@ -21,8 +26,4 @@ export const HintModelEvents = { StateUpdate: 'HintModelStateUpdate', VisibleUpd
 
 export const SoundModelEvents = { StateUpdate: 'SoundModelStateUpdate' };
 
-export const ZoneModelEvents = {
-    SelectedUpdate: 'ZoneModelSelectedUpdate',
-    TypeUpdate: 'ZoneModelTypeUpdate',
-    CompletedUpdate: 'ZoneModelCompletedUpdate',
-};
+export const ZoneModelEvents = { TypeUpdate: 'ZoneModelTypeUpdate', CompletedUpdate: 'ZoneModelCompletedUpdate' };
