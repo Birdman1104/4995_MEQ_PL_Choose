@@ -6,7 +6,7 @@ import { ZoneModel } from '../models/ZoneModel';
 import { makeSprite } from '../utils';
 
 export class Zone extends Container {
-    private plus: Sprite;
+    private plus: Sprite | null;
     private line: Sprite;
     private furniture: Sprite;
 
@@ -33,7 +33,8 @@ export class Zone extends Container {
     }
 
     public removePlusSign(): void {
-        this.plus.destroy();
+        this.plus?.destroy();
+        this.plus = null;
     }
 
     public buildFurniture({ x, y, type }): void {
