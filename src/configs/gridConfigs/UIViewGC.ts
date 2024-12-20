@@ -32,7 +32,7 @@ const getUIGridPortraitConfig = () => {
         cells: [
             {
                 name: 'slider_show',
-                bounds: { x: 0.1, y: 0.7, width: 0.8, height: 0.3 },
+                bounds: { x: 0.01, y: 0.7, width: 0.98, height: 0.3 },
             },
             {
                 name: 'slider_hide',

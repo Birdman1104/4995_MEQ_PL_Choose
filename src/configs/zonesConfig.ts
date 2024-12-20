@@ -51,7 +51,7 @@ export const LOCKS = [
 export const ButtonPositions = {
     1: { x: 0, y: 90 },
     2: { x: 0, y: 70 },
-    3: { x: 0, y: 70 },
+    3: { x: 0, y: 80 },
     4: { x: 0, y: 50 },
     5: { x: 0, y: 50 },
 };
