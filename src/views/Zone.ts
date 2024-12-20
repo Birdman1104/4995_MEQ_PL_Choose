@@ -1,12 +1,12 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
-import { Container, Sprite, Texture } from 'pixi.js';
+import { Container, Graphics, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { getFurnitureSpriteConfig, getLineSpriteConfig, plusSpriteConfig } from '../configs/spriteConfigs';
-import { ButtonPositions } from '../configs/zonesConfig';
+import { ButtonPositions, ZONE_HIT_AREA } from '../configs/zonesConfig';
 import { BoardEvents } from '../events/MainEvents';
 import { ZoneModel } from '../models/ZoneModel';
-import { makeSprite } from '../utils';
+import { bringToFront, makeSprite } from '../utils';
 import { ZoneButton } from './ZoneButtons';
 
 export class Zone extends Container {
@@ -16,6 +16,7 @@ export class Zone extends Container {
     private buttons: ZoneButton;
     private chosenItemId: string;
     private isCompleted = false;
+    private interactiveArea: Graphics;
 
     constructor(private config: ZoneModel) {
         super();
@@ -40,11 +41,11 @@ export class Zone extends Container {
     }
 
     public enableInteractive(): void {
-        this.line.interactive = true;
+        this.interactiveArea.interactive = true;
     }
 
     public disableInteractive(): void {
-        this.line.interactive = false;
+        this.interactiveArea.interactive = false;
     }
 
     public removePlusSign(): void {
@@ -54,13 +55,27 @@ export class Zone extends Container {
 
     public complete(): void {
         this.isCompleted = true;
-        console.warn('splash particles');
+        console.error('splash particles');
 
         this.hideLine();
         this.hideButtons();
     }
 
+    public removeFurniture(): void {
+        this.isCompleted = false;
+        anime({
+            targets: this.furniture,
+            alpha: 0,
+            duration: 100,
+            easing: 'linear',
+        });
+        this.buildPlus();
+        this.hideButtons();
+    }
+
     public buildFurniture({ x, y, type, uuid }): void {
+        console.warn(this.isCompleted, this.furniture);
+
         if (this.isCompleted) return;
 
         this.chosenItemId = uuid;
@@ -92,14 +107,20 @@ export class Zone extends Container {
                 easing: 'linear',
             });
             this.addChild(this.furniture);
-            this.buildButtons();
+            bringToFront(this, this.buttons);
+        }
+
+        if (!this.buttons.alpha) {
+            this.showButtons();
         }
     }
 
     private build(): void {
         this.buildLines();
+        this.buildInteractiveArea();
 
         this.config.selectedItem ? this.buildFurniture(this.config.selectedItem) : this.buildPlus();
+        this.buildButtons();
     }
 
     private buildButtons(): void {
@@ -113,18 +134,28 @@ export class Zone extends Container {
 
         this.buttons.on('no', () => {
             if (this.isCompleted) return;
-            console.warn('no');
+            lego.event.emit(BoardEvents.NoClick);
         });
+        this.buttons.alpha = 0;
         this.addChild(this.buttons);
     }
 
     private buildLines(): void {
         this.line = makeSprite(getLineSpriteConfig(this.zoneNumber));
-        this.line.interactive = true;
-        this.line.on('pointerdown', () => {
+        this.addChild(this.line);
+    }
+
+    private buildInteractiveArea(): void {
+        this.interactiveArea = new Graphics();
+        this.interactiveArea.beginFill(0xff0000, 0.3);
+        this.interactiveArea.drawPolygon(ZONE_HIT_AREA[this.zoneNumber]);
+        this.interactiveArea.endFill();
+        this.interactiveArea.alpha = 0;
+        this.interactiveArea.interactive = true;
+        this.interactiveArea.on('pointerdown', () => {
             lego.event.emit(BoardEvents.ZoneClicked, this.zoneNumber);
         });
-        this.addChild(this.line);
+        this.addChild(this.interactiveArea);
     }
 
     private buildPlus(): void {
@@ -148,7 +179,17 @@ export class Zone extends Container {
             alpha: 0,
             duration: 200,
             easing: 'linear',
-            complete: () => this.buttons.destroy(),
+            // complete: () => this.buttons.destroy(),
+        });
+    }
+
+    private showButtons(): void {
+        anime({
+            targets: this.buttons,
+            alpha: 1,
+            duration: 200,
+            easing: 'linear',
+            // complete: () => this.buttons.destroy(),
         });
     }
 }

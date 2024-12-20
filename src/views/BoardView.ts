@@ -6,7 +6,7 @@ import { BoardState } from '../models/BoardModel';
 import { GameState } from '../models/GameModel';
 import { ItemModel } from '../models/ItemModel';
 import { ZoneModel } from '../models/ZoneModel';
-import { lp, makeSprite } from '../utils';
+import { bringToFront, lp, makeSprite } from '../utils';
 import { Lock } from './Lock';
 import { Zone } from './Zone';
 
@@ -102,6 +102,8 @@ export class BoardView extends Container {
     private onSelectedZoneUpdate(newZone: ZoneModel | null, oldZone: ZoneModel | null, uuid: string): void {
         if (!newZone) {
             this.selectedZone = null;
+            this.zones.forEach((z) => z.enableInteractive());
+            this.sortZonesByDefault();
             return;
         }
 
@@ -109,12 +111,18 @@ export class BoardView extends Container {
         if (zone) {
             this.selectedZone = zone;
             this.selectedZone.removePlusSign();
+            bringToFront(this, this.selectedZone);
         }
+        this.zones.forEach((z) => {
+            if (z.uuid !== newZone.uuid) {
+                z.disableInteractive();
+            }
+        });
     }
 
     private onZoneSelectedItemUpdate(item: ItemModel): void {
         if (!this.selectedZone) return;
-        this.selectedZone.buildFurniture(item);
+        item ? this.selectedZone.buildFurniture(item) : this.selectedZone.removeFurniture();
     }
 
     private onZoneCompletedUpdate(completed: boolean, wasCompleted: boolean, uuid: string): void {
@@ -124,5 +132,10 @@ export class BoardView extends Container {
 
     private onGameStateUpdate(state: GameState): void {
         //
+    }
+
+    private sortZonesByDefault(): void {
+        this.zones.sort((a, b) => a.zoneNumber - b.zoneNumber);
+        this.zones.forEach((z) => bringToFront(this, z));
     }
 }

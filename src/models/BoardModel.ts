@@ -94,6 +94,12 @@ export class BoardModel extends ObservableModel {
         this.selectedZone = null;
     }
 
+    public noClick(): void {
+        this.state = BoardState.Idle;
+        this.selectedZone?.reset();
+        this.selectedZone = null;
+    }
+
     public initialize(): void {
         this.state = BoardState.ClickOnRoom;
         // this.initializeZones();

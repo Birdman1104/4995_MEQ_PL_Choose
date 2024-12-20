@@ -227,3 +227,8 @@ export const difference = (arrA: any[], arrB: any[]): any[] => {
 };
 
 export const dist = (a: PointLike, b: PointLike): number => Math.hypot(b.x - a.x, b.y - a.y);
+
+export const bringToFront = (container: any, child: any): void => {
+    container.removeChild(child);
+    container.addChild(child);
+};

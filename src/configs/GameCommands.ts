@@ -18,3 +18,6 @@ export const onLockClickCommand = () => {
 export const onOkClickCommand = (uuid: string) => {
     Head.gameModel?.board?.acceptOkClick(uuid);
 };
+export const onNoClickCommand = () => {
+    Head.gameModel?.board?.noClick();
+};

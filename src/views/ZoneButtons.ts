@@ -21,6 +21,7 @@ export class ZoneButton extends Container {
 
     private buildBkg(): void {
         this.bkg = makeSprite({ texture: Images['ui/buttons_bg'], anchor: new Point(0.5, 0.5) });
+        this.bkg.interactive = true;
         this.bkg.scale.x = 0.9;
         this.addChild(this.bkg);
     }

@@ -10,7 +10,13 @@ import {
     resizeCommand,
     takeToStoreCommand,
 } from './Commands';
-import { onCardClickCommand, onLockClickCommand, onOkClickCommand, onZoneClickedCommand } from './GameCommands';
+import {
+    onCardClickCommand,
+    onLockClickCommand,
+    onNoClickCommand,
+    onOkClickCommand,
+    onZoneClickedCommand,
+} from './GameCommands';
 
 export const mapCommands = () => {
     eventCommandPairs.forEach(({ event, command }) => {
@@ -68,5 +74,9 @@ const eventCommandPairs = Object.freeze([
     {
         event: BoardEvents.OkClick,
         command: onOkClickCommand,
+    },
+    {
+        event: BoardEvents.NoClick,
+        command: onNoClickCommand,
     },
 ]);

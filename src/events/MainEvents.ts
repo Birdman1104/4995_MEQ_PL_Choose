@@ -13,6 +13,7 @@ export const BoardEvents = {
     ZoneClicked: 'BoardEventsZoneClicked',
     LockClick: 'BoardEventsLockClick',
     OkClick: 'BoardEventsOkClick',
+    NoClick: 'BoardEventsNoClick',
 };
 
 export const UIEvents = {

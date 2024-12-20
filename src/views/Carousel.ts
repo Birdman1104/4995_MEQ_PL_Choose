@@ -100,6 +100,8 @@ export class Carousel extends Container {
             anime({
                 targets: item,
                 x: item.x + delta,
+                easing: 'easeInOutSine',
+                duration: 300,
                 begin: () => {
                     if (index === 0) {
                         this.animationRunning = true;
