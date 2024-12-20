@@ -125,6 +125,7 @@ export class Zone extends Container {
         this.buttons = new ZoneButton();
         const { x, y } = ButtonPositions[this.zoneNumber];
         this.buttons.position.set(x, y);
+        this.buttons.scale.set(1.2);
         this.buttons.on('ok', () => {
             if (this.isCompleted) return;
             lego.event.emit(BoardEvents.OkClick, this.chosenItemId);

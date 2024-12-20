@@ -57,6 +57,11 @@ export class ZoneModel extends ObservableModel {
         this._completed = false;
     }
 
+    public getItemPrice(uuid: string): number {
+        const item = this._availableItems.find((i) => i.uuid === uuid);
+        return item ? item.price : 0;
+    }
+
     public updateChosenItem(uuid: string): void {
         const item = this._availableItems.find((i) => i.uuid === uuid);
         if (!item) return;

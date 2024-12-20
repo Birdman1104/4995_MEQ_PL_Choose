@@ -20,6 +20,7 @@ export class BoardModel extends ObservableModel {
     private _zones: ZoneModel[] = [];
     private _selectedZoneNumber: number;
     private _selectedZone: ZoneModel | null;
+    private _money = 0;
 
     constructor() {
         super('BoardModel');
@@ -59,6 +60,14 @@ export class BoardModel extends ObservableModel {
         this._selectedZone = value;
     }
 
+    public get money(): number {
+        return this._money;
+    }
+
+    public set money(value: number) {
+        this._money = value;
+    }
+
     public setState(state: BoardState): void {
         this.state = state;
     }
@@ -90,6 +99,8 @@ export class BoardModel extends ObservableModel {
         if (!this.selectedZone) return;
 
         this.selectedZone.updateChosenItem(uuid);
+        const price = this.selectedZone.getItemPrice(uuid);
+        this.money -= price;
 
         const notCompleted = this.zones.find((zone) => !zone.completed);
         this.state = notCompleted ? BoardState.Idle : BoardState.Complete;
@@ -105,7 +116,7 @@ export class BoardModel extends ObservableModel {
 
     public initialize(): void {
         this.state = BoardState.Intro;
-        // this.initializeZones();
+        this._money = 14000;
     }
 
     public initializeZones(): void {

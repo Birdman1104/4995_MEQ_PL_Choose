@@ -8,9 +8,13 @@ const getUIGridLandscapeConfig = () => {
     const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
     return {
         name: 'ui',
-        // debug: { color: 0xd950ff },
+        debug: { color: 0xd950ff },
         bounds,
         cells: [
+            {
+                name: 'top_bar',
+                bounds: { x: 0.1, y: 0.05, width: 0.8, height: 0.1 },
+            },
             {
                 name: 'slider_show',
                 bounds: { x: 0.1, y: 0.7, width: 0.8, height: 0.3 },
@@ -27,9 +31,13 @@ const getUIGridPortraitConfig = () => {
     const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
     return {
         name: 'ui',
-        // debug: { color: 0xd950ff },
+        debug: { color: 0xd950ff },
         bounds,
         cells: [
+            {
+                name: 'top_bar',
+                bounds: { x: 0.1, y: 0.05, width: 0.8, height: 0.1 },
+            },
             {
                 name: 'slider_show',
                 bounds: { x: 0.01, y: 0.7, width: 0.98, height: 0.3 },

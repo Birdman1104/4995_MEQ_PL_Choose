@@ -6,10 +6,12 @@ import { BoardModelEvents } from '../events/ModelEvents';
 import { BoardState } from '../models/BoardModel';
 import { ZoneModel } from '../models/ZoneModel';
 import { Carousel } from './Carousel';
+import { TopBar } from './TopBar';
 export class UIView extends PixiGrid {
     private selectedZoneNumber: number;
     private selectedZone: string;
     private carousel: Carousel;
+    private topBar: TopBar;
 
     constructor() {
         super();
@@ -34,6 +36,9 @@ export class UIView extends PixiGrid {
         this.carousel = new Carousel();
         this.carousel.alpha = 0;
         this.setChild('slider_hide', this.carousel);
+
+        this.topBar = new TopBar();
+        this.setChild('top_bar', this.topBar);
     }
 
     private onSelectedZoneNumberUpdate(zoneNumber: number): void {
