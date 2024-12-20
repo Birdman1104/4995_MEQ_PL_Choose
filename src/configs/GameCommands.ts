@@ -14,3 +14,7 @@ export const onCardClickCommand = (uuid: string) => {
 export const onLockClickCommand = () => {
     lego.command.payload(BoardState.ClickOnRoom).execute(setBoardStateCommand);
 };
+
+export const onOkClickCommand = (uuid: string) => {
+    Head.gameModel?.board?.acceptOkClick(uuid);
+};

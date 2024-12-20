@@ -6,14 +6,12 @@ export enum BoardState {
     Unknown,
     Intro,
     ClickOnRoom,
-    ZoomIn,
+    Idle,
     Zone1,
     Zone2,
     Zone3,
     Zone4,
     Zone5,
-    ShowZoneVFX,
-    ShowFinalVFX,
 }
 
 export class BoardModel extends ObservableModel {
@@ -78,6 +76,7 @@ export class BoardModel extends ObservableModel {
 
         this._selectedZoneNumber = zone.zoneNumber;
         this._selectedZone = zone;
+        this.state = BoardStateMapToZone[zoneNumber];
     }
 
     public updateSelectedItem(uuid: string): void {
@@ -86,8 +85,17 @@ export class BoardModel extends ObservableModel {
         this.selectedZone.updateSelectedItem(uuid);
     }
 
+    public acceptOkClick(uuid: string): void {
+        if (!this.selectedZone) return;
+
+        this.selectedZone.updateChosenItem(uuid);
+        this.state = BoardState.Idle;
+
+        this.selectedZone = null;
+    }
+
     public initialize(): void {
-        this.state = BoardState.Intro;
+        this.state = BoardState.ClickOnRoom;
         // this.initializeZones();
     }
 
@@ -102,3 +110,11 @@ export class BoardModel extends ObservableModel {
         this.zones = arr;
     }
 }
+
+const BoardStateMapToZone = {
+    1: BoardState.Zone1,
+    2: BoardState.Zone2,
+    3: BoardState.Zone3,
+    4: BoardState.Zone4,
+    5: BoardState.Zone5,
+};

@@ -1,15 +1,13 @@
 import { lego } from '@armathai/lego';
 import { Container, Rectangle, Sprite } from 'pixi.js';
 import { Images } from '../assets';
-import { LOCKS } from '../configs/zonesConfig';
-import { BoardEvents } from '../events/MainEvents';
 import { BoardModelEvents, GameModelEvents, ZoneModelEvents } from '../events/ModelEvents';
 import { BoardState } from '../models/BoardModel';
 import { GameState } from '../models/GameModel';
 import { ItemModel } from '../models/ItemModel';
 import { ZoneModel } from '../models/ZoneModel';
 import { lp, makeSprite } from '../utils';
-import { Lock, LockArea } from './Lock';
+import { Lock } from './Lock';
 import { Zone } from './Zone';
 
 const BOUNDS_L = {
@@ -38,6 +36,7 @@ export class BoardView extends Container {
         lego.event
             .on(GameModelEvents.StateUpdate, this.onGameStateUpdate, this)
             .on(ZoneModelEvents.SelectedItemUpdate, this.onZoneSelectedItemUpdate, this)
+            .on(ZoneModelEvents.CompletedUpdate, this.onZoneCompletedUpdate, this)
             .on(BoardModelEvents.SelectedZoneUpdate, this.onSelectedZoneUpdate, this)
             .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this)
             .on(BoardModelEvents.ZonesUpdate, this.onZonesUpdate, this);
@@ -66,16 +65,16 @@ export class BoardView extends Container {
         this.bkg = makeSprite({ texture: Images['game/bkg'] });
         this.addChild(this.bkg);
 
-        LOCKS.forEach(({ x, y, area }) => {
-            const lock = new Lock(area);
-            lock.position.set(x, y);
-            lock.on('lockClick', (area: LockArea) => {
-                lock.hideSign();
-                lego.event.emit(BoardEvents.LockClick, area);
-            });
-            this.addChild(lock);
-            this.locks.push(lock);
-        });
+        // LOCKS.forEach(({ x, y, area }) => {
+        //     const lock = new Lock(area);
+        //     lock.position.set(x, y);
+        //     lock.on('lockClick', (area: LockArea) => {
+        //         lock.hideSign();
+        //         lego.event.emit(BoardEvents.LockClick, area);
+        //     });
+        //     this.addChild(lock);
+        //     this.locks.push(lock);
+        // });
     }
 
     private onBoardStateUpdate(state: BoardState): void {
@@ -114,13 +113,13 @@ export class BoardView extends Container {
     }
 
     private onZoneSelectedItemUpdate(item: ItemModel): void {
-        console.warn(this.selectedZone);
-
-        if (!this.selectedZone) {
-            return;
-        }
-
+        if (!this.selectedZone) return;
         this.selectedZone.buildFurniture(item);
+    }
+
+    private onZoneCompletedUpdate(completed: boolean, wasCompleted: boolean, uuid: string): void {
+        if (!this.selectedZone || !completed) return;
+        this.selectedZone.complete();
     }
 
     private onGameStateUpdate(state: GameState): void {

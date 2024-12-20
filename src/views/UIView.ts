@@ -3,6 +3,7 @@ import { ICellConfig, PixiGrid } from '@armathai/pixi-grid';
 import anime from 'animejs';
 import { getUIGridConfig } from '../configs/gridConfigs/UIViewGC';
 import { BoardModelEvents } from '../events/ModelEvents';
+import { BoardState } from '../models/BoardModel';
 import { ZoneModel } from '../models/ZoneModel';
 import { Carousel } from './Carousel';
 export class UIView extends PixiGrid {
@@ -14,6 +15,7 @@ export class UIView extends PixiGrid {
         super();
 
         lego.event
+            .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this)
             .on(BoardModelEvents.SelectedZoneNumberUpdate, this.onSelectedZoneNumberUpdate, this)
             .on(BoardModelEvents.SelectedZoneUpdate, this.onSelectedZoneUpdate, this);
 
@@ -36,6 +38,21 @@ export class UIView extends PixiGrid {
 
     private onSelectedZoneNumberUpdate(zoneNumber: number): void {
         this.selectedZoneNumber = zoneNumber;
+    }
+
+    private onBoardStateUpdate(state: BoardState): void {
+        switch (state) {
+            case BoardState.Zone1:
+            case BoardState.Zone2:
+            case BoardState.Zone3:
+            case BoardState.Zone4:
+            case BoardState.Zone5:
+                // this.sho
+                break;
+
+            default:
+                break;
+        }
     }
 
     private onSelectedZoneUpdate(zone: ZoneModel): void {

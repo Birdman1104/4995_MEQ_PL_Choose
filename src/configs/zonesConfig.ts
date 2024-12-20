@@ -47,3 +47,11 @@ export const LOCKS = [
     { x: -140, y: -150, area: LockArea.Lock2 },
     { x: 0, y: -220, area: LockArea.Lock3 },
 ];
+
+export const ButtonPositions = {
+    1: { x: 0, y: 90 },
+    2: { x: 0, y: 70 },
+    3: { x: 0, y: 70 },
+    4: { x: 0, y: 50 },
+    5: { x: 0, y: 50 },
+};
