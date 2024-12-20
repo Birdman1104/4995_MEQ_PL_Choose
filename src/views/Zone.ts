@@ -56,7 +56,7 @@ export class Zone extends Container {
     public complete(): void {
         this.isCompleted = true;
         console.error('splash particles');
-
+        this.interactiveArea.destroy();
         this.hideLine();
         this.hideButtons();
     }
@@ -74,8 +74,6 @@ export class Zone extends Container {
     }
 
     public buildFurniture({ x, y, type, uuid }): void {
-        console.warn(this.isCompleted, this.furniture);
-
         if (this.isCompleted) return;
 
         this.chosenItemId = uuid;
@@ -189,7 +187,7 @@ export class Zone extends Container {
             alpha: 1,
             duration: 200,
             easing: 'linear',
-            // complete: () => this.buttons.destroy(),
+            complete: () => this.buttons.activate(),
         });
     }
 }

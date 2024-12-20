@@ -101,7 +101,7 @@ export class BoardModel extends ObservableModel {
     }
 
     public initialize(): void {
-        this.state = BoardState.ClickOnRoom;
+        this.state = BoardState.Intro;
         // this.initializeZones();
     }
 

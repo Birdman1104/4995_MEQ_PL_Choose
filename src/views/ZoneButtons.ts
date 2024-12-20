@@ -13,6 +13,16 @@ export class ZoneButton extends Container {
         this.build();
     }
 
+    public activate(): void {
+        this.okButton.interactive = true;
+        this.noButton.interactive = true;
+    }
+
+    public deactivate(): void {
+        this.okButton.interactive = false;
+        this.noButton.interactive = false;
+    }
+
     private build(): void {
         this.buildBkg();
         this.buildOk();
@@ -34,7 +44,7 @@ export class ZoneButton extends Container {
         });
         this.okButton.interactive = true;
         this.okButton.on('pointerdown', () => {
-            this.noButton.interactive = false;
+            this.deactivate();
             this.emit('ok');
         });
         this.addChild(this.okButton);
@@ -48,7 +58,7 @@ export class ZoneButton extends Container {
         });
         this.noButton.interactive = true;
         this.noButton.on('pointerdown', () => {
-            this.okButton.interactive = false;
+            this.deactivate();
             this.emit('no');
         });
         this.addChild(this.noButton);
