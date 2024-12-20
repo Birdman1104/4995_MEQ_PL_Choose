@@ -1,14 +1,13 @@
 import { lego } from '@armathai/lego';
-import { Container, Rectangle, Sprite } from 'pixi.js';
+import { Container, NineSlicePlane, Rectangle, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { LOCKS } from '../configs/zonesConfig';
 import { BoardEvents } from '../events/MainEvents';
 import { BoardModelEvents, GameModelEvents, ZoneModelEvents } from '../events/ModelEvents';
-import { BoardState } from '../models/BoardModel';
 import { GameState } from '../models/GameModel';
 import { ItemModel } from '../models/ItemModel';
 import { ZoneModel } from '../models/ZoneModel';
-import { bringToFront, lp, makeSprite } from '../utils';
+import { bringToFront, getGameBounds, lp, makeSprite } from '../utils';
 import { Lock, LockArea } from './Lock';
 import { Zone } from './Zone';
 
@@ -31,6 +30,7 @@ export class BoardView extends Container {
     private zones: Zone[] = [];
     private selectedZone: Zone | null = null;
     private locks: Lock[] = [];
+    private overlay: NineSlicePlane;
 
     constructor() {
         super();
@@ -40,7 +40,6 @@ export class BoardView extends Container {
             .on(ZoneModelEvents.SelectedItemUpdate, this.onZoneSelectedItemUpdate, this)
             .on(ZoneModelEvents.CompletedUpdate, this.onZoneCompletedUpdate, this)
             .on(BoardModelEvents.SelectedZoneUpdate, this.onSelectedZoneUpdate, this)
-            .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this)
             .on(BoardModelEvents.ZonesUpdate, this.onZonesUpdate, this);
 
         this.build();
@@ -61,6 +60,7 @@ export class BoardView extends Container {
 
     private build(): void {
         this.buildBkg();
+        this.buildOverlay();
     }
 
     private buildBkg(): void {
@@ -79,17 +79,16 @@ export class BoardView extends Container {
         });
     }
 
-    private onBoardStateUpdate(state: BoardState): void {
-        console.warn(BoardState[state]);
-        switch (state) {
-            case BoardState.Intro:
-                // console.warn('intro');
-
-                break;
-
-            default:
-                break;
-        }
+    private buildOverlay(): void {
+        const { width, height } = getGameBounds();
+        const w = width * 2;
+        const h = height * 2;
+        this.overlay = new NineSlicePlane(Texture.from(Images['ui/bar']), 5, 5, 5, 5);
+        this.overlay.width = w;
+        this.overlay.height = h;
+        this.overlay.position.set(-w / 2, -h / 2);
+        this.overlay.alpha = 0;
+        this.addChild(this.overlay);
     }
 
     private onZonesUpdate(zones: ZoneModel[]): void {
@@ -106,6 +105,7 @@ export class BoardView extends Container {
             this.selectedZone = null;
             this.zones.forEach((z) => z.enableInteractive());
             this.sortZonesByDefault();
+            this.overlay.alpha = 0;
             return;
         }
 
@@ -113,6 +113,8 @@ export class BoardView extends Container {
         if (zone) {
             this.selectedZone = zone;
             this.selectedZone.removePlusSign();
+            this.overlay.alpha = 1;
+            bringToFront(this, this.overlay);
             bringToFront(this, this.selectedZone);
         }
         this.zones.forEach((z) => {
