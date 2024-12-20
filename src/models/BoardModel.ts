@@ -21,6 +21,7 @@ export class BoardModel extends ObservableModel {
     private _selectedZoneNumber: number;
     private _selectedZone: ZoneModel | null;
     private _money = 0;
+    private _progress = 0;
 
     constructor() {
         super('BoardModel');
@@ -68,6 +69,14 @@ export class BoardModel extends ObservableModel {
         this._money = value;
     }
 
+    public get progress(): number {
+        return this._progress;
+    }
+
+    public set progress(value: number) {
+        this._progress = value;
+    }
+
     public setState(state: BoardState): void {
         this.state = state;
     }
@@ -99,6 +108,7 @@ export class BoardModel extends ObservableModel {
         if (!this.selectedZone) return;
 
         this.selectedZone.updateChosenItem(uuid);
+
         const price = this.selectedZone.getItemPrice(uuid);
         this.money -= price;
 
@@ -106,6 +116,8 @@ export class BoardModel extends ObservableModel {
         this.state = notCompleted ? BoardState.Idle : BoardState.Complete;
 
         this.selectedZone = null;
+
+        this.progress = this.zones.filter((zone) => zone.completed).length / this.zones.length;
     }
 
     public noClick(): void {

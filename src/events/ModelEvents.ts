@@ -11,6 +11,7 @@ export const BoardModelEvents = {
     SelectedZoneNumberUpdate: 'BoardModelSelectedZoneNumberUpdate',
     SelectedZoneUpdate: 'BoardModelSelectedZoneUpdate',
     MoneyUpdate: 'BoardModelMoneyUpdate',
+    ProgressUpdate: 'BoardModelProgressUpdate',
 };
 
 export const CtaModelEvents = { VisibleUpdate: 'CtaModelVisibleUpdate' };
