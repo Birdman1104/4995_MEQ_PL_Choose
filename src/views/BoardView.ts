@@ -1,10 +1,12 @@
 import { lego } from '@armathai/lego';
+import anime from 'animejs';
 import { Container, NineSlicePlane, Rectangle, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
+import { EXTERIOR_ITEMS } from '../configs/exteriorConfig';
 import { LOCKS } from '../configs/zonesConfig';
 import { BoardEvents } from '../events/MainEvents';
-import { BoardModelEvents, GameModelEvents, ZoneModelEvents } from '../events/ModelEvents';
-import { GameState } from '../models/GameModel';
+import { BoardModelEvents, ZoneModelEvents } from '../events/ModelEvents';
+import { BoardState } from '../models/BoardModel';
 import { ItemModel } from '../models/ItemModel';
 import { ZoneModel } from '../models/ZoneModel';
 import { bringToFront, getGameBounds, lp, makeSprite } from '../utils';
@@ -31,12 +33,13 @@ export class BoardView extends Container {
     private selectedZone: Zone | null = null;
     private locks: Lock[] = [];
     private overlay: NineSlicePlane;
+    private fullFence: Sprite;
 
     constructor() {
         super();
 
         lego.event
-            .on(GameModelEvents.StateUpdate, this.onGameStateUpdate, this)
+            .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this)
             .on(ZoneModelEvents.SelectedItemUpdate, this.onZoneSelectedItemUpdate, this)
             .on(ZoneModelEvents.CompletedUpdate, this.onZoneCompletedUpdate, this)
             .on(BoardModelEvents.SelectedZoneUpdate, this.onSelectedZoneUpdate, this)
@@ -60,13 +63,18 @@ export class BoardView extends Container {
 
     private build(): void {
         this.buildBkg();
+        this.buildLocks();
+        this.buildEmptyFence();
+        this.buildFullFence();
         this.buildOverlay();
     }
 
     private buildBkg(): void {
         this.bkg = makeSprite({ texture: Images['game/bkg'] });
         this.addChild(this.bkg);
+    }
 
+    private buildLocks(): void {
         LOCKS.forEach(({ x, y, area }) => {
             const lock = new Lock(area);
             lock.position.set(x, y);
@@ -77,6 +85,19 @@ export class BoardView extends Container {
             this.addChild(lock);
             this.locks.push(lock);
         });
+    }
+
+    private buildEmptyFence(): void {
+        const config = EXTERIOR_ITEMS.find((item) => item.item === 'emptyFence')!.config;
+        const sprite = makeSprite(config);
+        this.addChild(sprite);
+    }
+
+    private buildFullFence(): void {
+        const config = EXTERIOR_ITEMS.find((item) => item.item === 'fullFence')!.config;
+        this.fullFence = makeSprite(config);
+        this.fullFence.alpha = 0;
+        this.addChild(this.fullFence);
     }
 
     private buildOverlay(): void {
@@ -134,8 +155,19 @@ export class BoardView extends Container {
         this.selectedZone.complete();
     }
 
-    private onGameStateUpdate(state: GameState): void {
-        //
+    private onBoardStateUpdate(state: BoardState): void {
+        if (state === BoardState.Complete) {
+            this.showFullFence();
+        }
+    }
+
+    private showFullFence(): void {
+        anime({
+            targets: this.fullFence,
+            alpha: 1,
+            duration: 500,
+            easing: 'easeInOutSine',
+        });
     }
 
     private sortZonesByDefault(): void {

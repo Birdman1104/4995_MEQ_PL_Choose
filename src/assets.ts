@@ -2,6 +2,8 @@
 
 export const assets = {
     images: {
+        'exterior/empty_fence.png': require('../assets/images/exterior/empty_fence.png').default,
+        'exterior/full_fence.png': require('../assets/images/exterior/full_fence.png').default,
         'filling/1.png': require('../assets/images/filling/1.png').default,
         'filling/10.png': require('../assets/images/filling/10.png').default,
         'filling/11.png': require('../assets/images/filling/11.png').default,
@@ -70,6 +72,8 @@ export const assets = {
 };
 
 export const Images = {
+    'exterior/empty_fence': 'exterior/empty_fence.png',
+    'exterior/full_fence': 'exterior/full_fence.png',
     'filling/1': 'filling/1.png',
     'filling/10': 'filling/10.png',
     'filling/11': 'filling/11.png',
