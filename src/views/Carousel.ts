@@ -7,7 +7,7 @@ import { makeSprite } from '../utils';
 import { ChoiceCard } from './ChoiceCard';
 
 const W = 80;
-const OFFSET = 100;
+const OFFSET = 80;
 
 export class Carousel extends Container {
     private rightArrow: Sprite;
@@ -28,7 +28,7 @@ export class Carousel extends Container {
     }
 
     public getBounds(): Rectangle {
-        return new Rectangle(-300, -100, 600, 200);
+        return new Rectangle(-230, -70, 460, 140);
     }
 
     public updateItemsData(data: { img: string; price: number; uuid: string }[]): void {
