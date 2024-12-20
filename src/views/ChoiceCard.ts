@@ -65,7 +65,7 @@ export class ChoiceCard extends Container {
             align: 'center',
         });
         this.price.anchor.set(0, 0.5);
-        this.price.position.set(-10, 37);
+        this.price.position.set(0, this.moneyIcon.y);
         this.addChild(this.price);
     }
 

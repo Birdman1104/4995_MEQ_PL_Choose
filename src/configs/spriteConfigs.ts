@@ -30,14 +30,14 @@ export const getArrowConfig = (side: 'left' | 'right') => {
 
 export const cardBkgSpriteConfig = {
     texture: Images['ui/choice_bg'],
-    scale: new Point(1.5, 1.5),
+    scale: new Point(2.25, 1.75),
     anchor: new Point(0.5, 0.5),
 };
 
 export const moneySpriteConfig = {
     texture: Images['ui/money'],
     anchor: new Point(0.5, 0.5),
-    position: new Point(-25, 37),
+    position: new Point(-25, 40),
     scale: new Point(0.6, 0.6),
 };
 

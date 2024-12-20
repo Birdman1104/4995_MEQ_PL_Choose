@@ -18,16 +18,16 @@ export class TopBar extends Container {
     }
 
     getBounds(): Rectangle {
-        return new Rectangle(0, 0, 800, 100);
+        return new Rectangle(0, 0, 700, 100);
     }
 
     private build(): void {
         this.moneyBar = new MoneyBar();
-        this.moneyBar.position.set(570, 25);
+        this.moneyBar.position.set(450, 25);
         this.addChild(this.moneyBar);
 
         this.progressBar = new ProgressBar();
-        this.progressBar.position.set(70, 25);
+        this.progressBar.position.set(50, 25);
         this.addChild(this.progressBar);
     }
 

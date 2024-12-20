@@ -58,7 +58,7 @@ export class BoardView extends Container {
     }
 
     public rebuild(): void {
-        //
+        this.setOverlaySize();
     }
 
     private build(): void {
@@ -101,13 +101,8 @@ export class BoardView extends Container {
     }
 
     private buildOverlay(): void {
-        const { width, height } = getGameBounds();
-        const w = width * 2;
-        const h = height * 2;
         this.overlay = new NineSlicePlane(Texture.from(Images['ui/bar']), 5, 5, 5, 5);
-        this.overlay.width = w;
-        this.overlay.height = h;
-        this.overlay.position.set(-w / 2, -h / 2);
+        this.setOverlaySize();
         this.overlay.alpha = 0;
         this.addChild(this.overlay);
     }
@@ -173,5 +168,14 @@ export class BoardView extends Container {
     private sortZonesByDefault(): void {
         this.zones.sort((a, b) => a.zoneNumber - b.zoneNumber);
         this.zones.forEach((z) => bringToFront(this, z));
+    }
+
+    private setOverlaySize(): void {
+        const { width, height } = getGameBounds();
+        const w = width * 2;
+        const h = height * 2;
+        this.overlay.width = w;
+        this.overlay.height = h;
+        this.overlay.position.set(-w / 2, -h / 2);
     }
 }

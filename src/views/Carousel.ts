@@ -7,7 +7,14 @@ import { makeSprite } from '../utils';
 import { ChoiceCard } from './ChoiceCard';
 
 const W = 80;
-const OFFSET = 80;
+const OFFSET = 30;
+
+const maskConfig = {
+    x: -200,
+    y: -100,
+    width: 400,
+    height: 200,
+};
 
 export class Carousel extends Container {
     private rightArrow: Sprite;
@@ -47,7 +54,7 @@ export class Carousel extends Container {
 
         this.maskGr = new Graphics();
         this.maskGr.beginFill(0xff0000);
-        this.maskGr.drawRect(-200, -100, 400, 200);
+        this.maskGr.drawRect(maskConfig.x, maskConfig.y, maskConfig.width, maskConfig.height);
         this.maskGr.endFill();
         this.addChild(this.maskGr);
         this.carouselContainer.mask = this.maskGr;

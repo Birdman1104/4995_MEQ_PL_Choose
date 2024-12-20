@@ -13,11 +13,11 @@ const getUIGridLandscapeConfig = () => {
         cells: [
             {
                 name: 'top_bar',
-                bounds: { x: 0.1, y: 0.05, width: 0.8, height: 0.1 },
+                bounds: { x: 0.1, y: 0.01, width: 0.8, height: 0.15 },
             },
             {
                 name: 'slider_show',
-                bounds: { x: 0.1, y: 0.7, width: 0.8, height: 0.3 },
+                bounds: { x: 0.1, y: 0.7, width: 0.8, height: 0.29 },
             },
             {
                 name: 'slider_hide',
@@ -36,7 +36,7 @@ const getUIGridPortraitConfig = () => {
         cells: [
             {
                 name: 'top_bar',
-                bounds: { x: 0.1, y: 0.05, width: 0.8, height: 0.1 },
+                bounds: { x: 0.01, y: 0.05, width: 0.98, height: 0.1 },
             },
             {
                 name: 'slider_show',
