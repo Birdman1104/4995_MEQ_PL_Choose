@@ -12,6 +12,7 @@ export enum BoardState {
     Zone3,
     Zone4,
     Zone5,
+    Complete,
 }
 
 export class BoardModel extends ObservableModel {
@@ -89,7 +90,9 @@ export class BoardModel extends ObservableModel {
         if (!this.selectedZone) return;
 
         this.selectedZone.updateChosenItem(uuid);
-        this.state = BoardState.Idle;
+
+        const notCompleted = this.zones.find((zone) => !zone.completed);
+        this.state = notCompleted ? BoardState.Idle : BoardState.Complete;
 
         this.selectedZone = null;
     }
