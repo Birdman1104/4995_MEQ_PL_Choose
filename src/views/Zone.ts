@@ -87,6 +87,7 @@ export class Zone extends Container {
                 easing: 'linear',
                 complete: () => {
                     this.furniture.texture = Texture.from(texture);
+                    this.furniture.position.set(x, y);
                     anime({
                         targets: this.furniture,
                         alpha: 1,
