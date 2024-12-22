@@ -48,7 +48,7 @@ export class GameView extends PixiGrid {
 
     private buildBoard() {
         this.board = new BoardView();
-        this.setChild('board', this.board);
+        this.setChild('initial_cell', this.board);
     }
 
     private destroyBoard(): void {

@@ -13,6 +13,11 @@ const getGameViewGridLandscapeConfig = () => {
         bounds,
         cells: [
             {
+                name: 'initial_cell',
+                scale: CellScale.envelop,
+                bounds: { x: 0.1, y: 0.1, width: 0.8, height: 0.8 },
+            },
+            {
                 name: 'intro',
                 scale: CellScale.fit,
                 bounds: { x: 0.1, y: 0.1, width: 0.8, height: 0.8 },
@@ -59,6 +64,11 @@ const getGameViewGridPortraitConfig = () => {
         // debug: { color: 0xd9ff27 },
         bounds,
         cells: [
+            {
+                name: 'initial_cell',
+                scale: CellScale.none,
+                bounds: { x: 0.3, y: 0.4, width: 0.4, height: 0.2 },
+            },
             {
                 name: 'intro',
                 scale: CellScale.fit,
