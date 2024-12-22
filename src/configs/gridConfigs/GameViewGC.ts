@@ -40,17 +40,17 @@ const getGameViewGridLandscapeConfig = () => {
             {
                 name: 'zone_3',
                 scale: CellScale.fit,
-                bounds: { x: -0.35, y: -0.3, width: 1.5, height: 1.4 },
+                bounds: { x: -0.37, y: -0.3, width: 1.5, height: 1.4 },
             },
             {
                 name: 'zone_4',
                 scale: CellScale.fit,
-                bounds: { x: -0.2, y: -0.3, width: 1.4, height: 1.4 },
+                bounds: { x: -0.2, y: -0.25, width: 1.4, height: 1.4 },
             },
             {
                 name: 'zone_5',
                 scale: CellScale.fit,
-                bounds: { x: -0.2, y: -0.4, width: 1.4, height: 1.4 },
+                bounds: { x: -0.2, y: -0.3, width: 1.4, height: 1.4 },
             },
         ],
     };
@@ -82,27 +82,27 @@ const getGameViewGridPortraitConfig = () => {
             {
                 name: 'zone_1',
                 scale: CellScale.fit,
-                bounds: { x: -0.1, y: -0.1, width: 1.4, height: 1.3 },
+                bounds: { x: -0.05, y: -0.2, width: 1.5, height: 1.3 },
             },
             {
                 name: 'zone_2',
                 scale: CellScale.fit,
-                bounds: { x: -0.25, y: -0.075, width: 1.4, height: 1.3 },
+                bounds: { x: -0.25, y: -0.25, width: 1.4, height: 1.3 },
             },
             {
                 name: 'zone_3',
                 scale: CellScale.fit,
-                bounds: { x: -0.4, y: -0.1, width: 1.4, height: 1.3 },
+                bounds: { x: -0.4, y: -0.3, width: 1.4, height: 1.3 },
             },
             {
                 name: 'zone_4',
                 scale: CellScale.fit,
-                bounds: { x: -0.2, y: -0.125, width: 1.4, height: 1.3 },
+                bounds: { x: -0.2, y: -0.25, width: 1.4, height: 1.3 },
             },
             {
                 name: 'zone_5',
                 scale: CellScale.fit,
-                bounds: { x: -0.2, y: -0.2, width: 1.4, height: 1.3 },
+                bounds: { x: -0.2, y: -0.3, width: 1.4, height: 1.3 },
             },
         ],
     };

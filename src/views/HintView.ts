@@ -43,7 +43,6 @@ export class HintView extends Container {
     private show(): void {
         this.removeTweens();
         this.hintPositions = this.getHintPosition();
-        console.warn(this.hintPositions);
 
         this.currentPoint = 0;
 
