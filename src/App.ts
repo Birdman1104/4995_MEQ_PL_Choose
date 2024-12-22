@@ -82,7 +82,17 @@ class App extends Application {
         lego.command.execute(mapCommands);
         lego.event.emit(MainGameEvents.MainViewReady);
 
-        this.ticker.add(() => this.stage.update());
+        const fixedFPS = 60;
+        const fixedDeltaTime = 1000 / fixedFPS;
+        let accumulator = 0;
+
+        this.ticker.add((deltaTime) => {
+            accumulator += (deltaTime * 1000) / this.ticker.FPS;
+            while (accumulator >= fixedDeltaTime) {
+                this.stage.update(fixedDeltaTime / 1000);
+                accumulator -= fixedDeltaTime;
+            }
+        });
     }
 
     private resizeCanvas(width: number, height: number): void {

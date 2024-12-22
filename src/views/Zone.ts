@@ -1,9 +1,11 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
+import { Emitter } from 'pixi-particles';
 import { Container, Graphics, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
+import { circleParticleConfig, getSplashParticlesConfig } from '../configs/particlesConfig';
 import { getFurnitureSpriteConfig, getLineSpriteConfig, plusSpriteConfig } from '../configs/spriteConfigs';
-import { ButtonPositions, ZONE_HIT_AREA } from '../configs/zonesConfig';
+import { ButtonPositions, ZONE_HIT_AREA, ZONE_PARTICLE_CONFIG } from '../configs/zonesConfig';
 import { BoardEvents } from '../events/MainEvents';
 import { ZoneModel } from '../models/ZoneModel';
 import { bringToFront, makeSprite } from '../utils';
@@ -17,6 +19,9 @@ export class Zone extends Container {
     private chosenItemId: string;
     private isCompleted = false;
     private interactiveArea: Graphics;
+    private particleContainer: Container;
+    private emitter: Emitter;
+    private emitters: Emitter[] = [];
 
     constructor(private config: ZoneModel) {
         super();
@@ -40,6 +45,10 @@ export class Zone extends Container {
         return this.config.uuid;
     }
 
+    public update(dt: number): void {
+        this.emitters?.forEach((emitter) => emitter?.update(dt));
+    }
+
     public enableInteractive(): void {
         this.interactiveArea.interactive = true;
     }
@@ -60,6 +69,17 @@ export class Zone extends Container {
         this.hideLine();
         this.hideButtons();
     }
+
+    // public emitParticles(): void {
+    //     if (!this.particleContainer) {
+    //         // const { rotation, x, y, w, h } = ZONE_PARTICLE_CONFIG[this.zoneNumber];
+    //         // const gr = new Graphics();
+    //         // gr.beginFill(0xff0000, 0.3);
+    //         // gr.drawRect(x, y, w, h);
+    //         // gr.endFill();
+    //         // this.addChild(gr);
+    //     }
+    // }
 
     public removeFurniture(): void {
         this.isCompleted = false;
@@ -120,6 +140,9 @@ export class Zone extends Container {
 
         this.config.selectedItem ? this.buildFurniture(this.config.selectedItem) : this.buildPlus();
         this.buildButtons();
+
+        this.particleContainer = new Container();
+        this.addChild(this.particleContainer);
     }
 
     private buildButtons(): void {
@@ -129,6 +152,7 @@ export class Zone extends Container {
         this.buttons.scale.set(1.2);
         this.buttons.on('ok', () => {
             if (this.isCompleted) return;
+            this.emitParticles();
             lego.event.emit(BoardEvents.OkClick, this.chosenItemId);
         });
 
@@ -162,6 +186,39 @@ export class Zone extends Container {
     private buildPlus(): void {
         this.plus = makeSprite(plusSpriteConfig);
         this.addChild(this.plus);
+    }
+
+    private emitParticles(): void {
+        const { x, y, w, h } = ZONE_PARTICLE_CONFIG[this.zoneNumber];
+        this.emitters.push(
+            new Emitter(
+                this.particleContainer,
+                [Texture.from(Images['game/particle'])],
+                circleParticleConfig,
+                // getItemPuttingParticlesConfig(x, y, w, h, rotation),
+            ),
+        );
+        this.emitters.push(
+            new Emitter(
+                this.particleContainer,
+                [Texture.from(Images['game/spark'])],
+                getSplashParticlesConfig(x, y, w, h, '4dc934'),
+            ),
+        );
+        this.emitters.push(
+            new Emitter(
+                this.particleContainer,
+                [Texture.from(Images['game/spark'])],
+                getSplashParticlesConfig(x + w / 4, y + h / 4, w / 2, h / 2, 'c934a6'),
+            ),
+        );
+        this.emitters.push(
+            new Emitter(
+                this.particleContainer,
+                [Texture.from(Images['game/spark'])],
+                getSplashParticlesConfig(x + w / 4, y + h / 4, w / 2, h / 2, 'd49d08'),
+            ),
+        );
     }
 
     private hideLine(): void {

@@ -15,6 +15,8 @@ export class MoneyBar extends Container {
 
     public updateMoney(value: number): void {
         this.value.text = value.toString();
+        this.value.style.fontFamily = 'MyCustomFont';
+        this.value.updateText(false);
     }
 
     private build(): void {
@@ -37,8 +39,12 @@ export class MoneyBar extends Container {
     }
 
     private buildValue(): void {
-        this.value = new Text('0', { fill: 'white', fontSize: 36 });
+        this.value = new Text('0', { fill: 'white', fontSize: 36, fontFamily: 'MyCustomFont' });
         this.value.anchor.set(0.5);
+        // delayRunnable(0.5, () => {
+        //     this.value.style.fontFamily = 'MyCustomFont';
+        //     this.value.updateText(true);
+        // });
         this.value.position.set(110, 25);
         this.addChild(this.value);
     }

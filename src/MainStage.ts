@@ -18,9 +18,9 @@ class PixiStage extends Container {
         super();
     }
 
-    public update(): void {
+    public update(dt): void {
         if (!this.started) return;
-        this.gameView?.update();
+        this.gameView?.update(dt);
     }
 
     public resize(): void {

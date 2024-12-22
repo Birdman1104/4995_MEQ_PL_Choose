@@ -1,5 +1,6 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
+import { Emitter } from 'pixi-particles';
 import { Container, NineSlicePlane, Rectangle, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { EXTERIOR_ITEMS } from '../configs/exteriorConfig';
@@ -34,6 +35,7 @@ export class BoardView extends Container {
     private locks: Lock[] = [];
     private overlay: NineSlicePlane;
     private fullFence: Sprite;
+    private emitter: Emitter;
 
     constructor() {
         super();
@@ -50,6 +52,12 @@ export class BoardView extends Container {
 
     get viewName() {
         return 'BoardView';
+    }
+
+    public update(dt): void {
+        console.log(dt);
+        // this.emitter?.update(dt);
+        this.zones.forEach((z) => z?.update(dt));
     }
 
     public getBounds(): Rectangle {
@@ -151,6 +159,8 @@ export class BoardView extends Container {
     }
 
     private onBoardStateUpdate(state: BoardState): void {
+        console.warn(BoardState[state]);
+
         if (state === BoardState.Complete) {
             this.showFullFence();
         }

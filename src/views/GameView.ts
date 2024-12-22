@@ -25,8 +25,8 @@ export class GameView extends PixiGrid {
         return getGameViewGridConfig();
     }
 
-    public update(): void {
-        //
+    public update(dt): void {
+        this.board?.update(dt);
     }
 
     public rebuild(config?: ICellConfig | undefined): void {

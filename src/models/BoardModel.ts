@@ -127,7 +127,7 @@ export class BoardModel extends ObservableModel {
     }
 
     public initialize(): void {
-        this.state = BoardState.Intro;
+        this.state = BoardState.ClickOnRoom;
         this._money = 14000;
     }
 

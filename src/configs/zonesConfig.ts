@@ -63,3 +63,11 @@ export const ZONE_HIT_AREA = {
     4: [-60, 10, 20, -30, 60, -10, -10, 30],
     5: [-100, 10, 20, -50, 100, -10, -10, 50],
 };
+
+export const ZONE_PARTICLE_CONFIG = {
+    1: { rotation: -0.45 - Math.PI / 2, x: -80, y: -40, w: 170, h: 80 },
+    2: { rotation: 0.25, x: -50, y: -40, w: 80, h: 80 },
+    3: { rotation: 0, x: -10, y: -50, w: 20, h: 100 },
+    4: { rotation: -0.4, x: -50, y: -20, w: 80, h: 40 },
+    5: { rotation: -0.4, x: -70, y: -40, w: 120, h: 80 },
+};

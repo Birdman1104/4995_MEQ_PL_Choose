@@ -59,9 +59,9 @@ export class ChoiceCard extends Container {
 
     private buildPrice(): void {
         this.price = new Text('100', {
-            fontFamily: 'Arial',
+            fontFamily: 'MyCustomFont',
             fontSize: 20,
-            fill: 0xffffff,
+            fill: 0x1ba100,
             align: 'center',
         });
         this.price.anchor.set(0, 0.5);
