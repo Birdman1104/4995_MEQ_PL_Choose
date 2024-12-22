@@ -137,6 +137,7 @@ export class Zone extends Container {
             lego.event.emit(BoardEvents.NoClick);
         });
         this.buttons.alpha = 0;
+        this.buttons.deactivate();
         this.addChild(this.buttons);
     }
 
@@ -179,7 +180,7 @@ export class Zone extends Container {
             alpha: 0,
             duration: 200,
             easing: 'linear',
-            // complete: () => this.buttons.destroy(),
+            complete: () => this.buttons.deactivate(),
         });
     }
 
