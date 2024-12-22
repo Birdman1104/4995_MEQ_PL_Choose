@@ -124,10 +124,11 @@ export class BoardModel extends ObservableModel {
         this.state = BoardState.Idle;
         this.selectedZone?.reset();
         this.selectedZone = null;
+        this.selectedZoneNumber = -1;
     }
 
     public initialize(): void {
-        this.state = BoardState.ClickOnRoom;
+        this.state = BoardState.Intro;
         this._money = 14000;
     }
 

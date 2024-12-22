@@ -13,6 +13,10 @@ export class ZoneButton extends Container {
         this.build();
     }
 
+    public getHintPosition(): Point[] {
+        return [this.toGlobal(new Point(this.okButton.x, this.okButton.y))];
+    }
+
     public activate(): void {
         this.okButton.interactive = true;
         this.noButton.interactive = true;

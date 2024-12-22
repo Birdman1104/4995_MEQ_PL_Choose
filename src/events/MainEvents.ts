@@ -18,6 +18,7 @@ export const BoardEvents = {
 
 export const UIEvents = {
     CardClick: 'UIEventsCardClick',
+    CarouselUpdate: 'UIEventsCarouselUpdate',
 };
 
 export const TakeMe = {

@@ -1,6 +1,6 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
-import { Container, Graphics, Rectangle, Sprite } from 'pixi.js';
+import { Container, Graphics, Point, Rectangle, Sprite } from 'pixi.js';
 import { getArrowConfig } from '../configs/spriteConfigs';
 import { UIEvents } from '../events/MainEvents';
 import { makeSprite } from '../utils';
@@ -34,8 +34,16 @@ export class Carousel extends Container {
         // drawBounds(this);
     }
 
+    get viewName() {
+        return 'Carousel';
+    }
+
     public getBounds(): Rectangle {
         return new Rectangle(-230, -70, 460, 140);
+    }
+
+    public getHintPosition(): Point[] {
+        return [this.toGlobal(new Point(-100, 0)), this.toGlobal(new Point(100, 0))];
     }
 
     public updateItemsData(data: { img: string; price: number; uuid: string }[]): void {
@@ -85,6 +93,7 @@ export class Carousel extends Container {
     }
 
     private slideCarousel(direction) {
+        lego.event.emit(UIEvents.CarouselUpdate);
         if (this.animationRunning) return;
 
         const totalItems = this.items.length;

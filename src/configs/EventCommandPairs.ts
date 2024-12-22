@@ -12,6 +12,7 @@ import {
 } from './Commands';
 import {
     onCardClickCommand,
+    onCarouselUpdateCommand,
     onLockClickCommand,
     onNoClickCommand,
     onOkClickCommand,
@@ -78,5 +79,10 @@ const eventCommandPairs = Object.freeze([
     {
         event: BoardEvents.NoClick,
         command: onNoClickCommand,
+    },
+
+    {
+        event: UIEvents.CarouselUpdate,
+        command: onCarouselUpdateCommand,
     },
 ]);

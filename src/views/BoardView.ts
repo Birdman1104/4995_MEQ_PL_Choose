@@ -1,7 +1,7 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
 import { Emitter } from 'pixi-particles';
-import { Container, NineSlicePlane, Rectangle, Sprite, Texture } from 'pixi.js';
+import { Container, NineSlicePlane, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { EXTERIOR_ITEMS } from '../configs/exteriorConfig';
 import { LOCKS } from '../configs/zonesConfig';
@@ -10,7 +10,7 @@ import { BoardModelEvents, ZoneModelEvents } from '../events/ModelEvents';
 import { BoardState } from '../models/BoardModel';
 import { ItemModel } from '../models/ItemModel';
 import { ZoneModel } from '../models/ZoneModel';
-import { bringToFront, getGameBounds, lp, makeSprite } from '../utils';
+import { bringToFront, getGameBounds, getViewByProperty, lp, makeSprite } from '../utils';
 import { Lock, LockArea } from './Lock';
 import { Zone } from './Zone';
 
@@ -25,10 +25,11 @@ const BOUNDS_P = {
     x: -300,
     y: -600,
     w: 600,
-    h: 1200,
+    h: 1000,
 };
 
 export class BoardView extends Container {
+    private state: BoardState;
     private bkg: Sprite;
     private zones: Zone[] = [];
     private selectedZone: Zone | null = null;
@@ -55,8 +56,6 @@ export class BoardView extends Container {
     }
 
     public update(dt): void {
-        console.log(dt);
-        // this.emitter?.update(dt);
         this.zones.forEach((z) => z?.update(dt));
     }
 
@@ -67,6 +66,37 @@ export class BoardView extends Container {
 
     public rebuild(): void {
         this.setOverlaySize();
+    }
+
+    public getHintPositions(): Point[] {
+        switch (this.state) {
+            case BoardState.Intro:
+                const { x, y } = this.toGlobal(new Point(0, 0));
+                return [new Point(x - 10, y + 20)];
+            case BoardState.ClickOnRoom:
+            case BoardState.Idle:
+                const zone = this.zones.reverse().find((z) => !z.isCompleted);
+                if (zone) {
+                    const { x, y } = zone.toGlobal(new Point(0, 0));
+                    return [new Point(x, y + 5)];
+                }
+
+            case BoardState.Zone1:
+            case BoardState.Zone2:
+            case BoardState.Zone3:
+            case BoardState.Zone4:
+            case BoardState.Zone5:
+                if (this.selectedZone?.isShowingButtons) {
+                    return this.selectedZone.getHintPosition();
+                } else {
+                    const carousel = getViewByProperty('viewName', 'Carousel');
+                    return carousel.getHintPosition();
+                }
+
+            default:
+                break;
+        }
+        return [new Point(0, 0)];
     }
 
     private build(): void {
@@ -160,7 +190,7 @@ export class BoardView extends Container {
 
     private onBoardStateUpdate(state: BoardState): void {
         console.warn(BoardState[state]);
-
+        this.state = state;
         if (state === BoardState.Complete) {
             this.showFullFence();
         }

@@ -1,7 +1,7 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
 import { Emitter } from 'pixi-particles';
-import { Container, Graphics, Sprite, Texture } from 'pixi.js';
+import { Container, Graphics, Point, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { circleParticleConfig, getSplashParticlesConfig } from '../configs/particlesConfig';
 import { getFurnitureSpriteConfig, getLineSpriteConfig, plusSpriteConfig } from '../configs/spriteConfigs';
@@ -17,10 +17,9 @@ export class Zone extends Container {
     private furniture: Sprite;
     private buttons: ZoneButton;
     private chosenItemId: string;
-    private isCompleted = false;
+    private _isCompleted = false;
     private interactiveArea: Graphics;
     private particleContainer: Container;
-    private emitter: Emitter;
     private emitters: Emitter[] = [];
 
     constructor(private config: ZoneModel) {
@@ -45,6 +44,18 @@ export class Zone extends Container {
         return this.config.uuid;
     }
 
+    get isCompleted(): boolean {
+        return this._isCompleted;
+    }
+
+    get isShowingButtons(): boolean {
+        return this.buttons.alpha > 0;
+    }
+
+    public getHintPosition(): Point[] {
+        return this.buttons.getHintPosition();
+    }
+
     public update(dt: number): void {
         this.emitters?.forEach((emitter) => emitter?.update(dt));
     }
@@ -63,7 +74,7 @@ export class Zone extends Container {
     }
 
     public complete(): void {
-        this.isCompleted = true;
+        this._isCompleted = true;
         console.error('splash particles');
         this.interactiveArea.destroy();
         this.hideLine();
@@ -82,7 +93,7 @@ export class Zone extends Container {
     // }
 
     public removeFurniture(): void {
-        this.isCompleted = false;
+        this._isCompleted = false;
         anime({
             targets: this.furniture,
             alpha: 0,
@@ -94,7 +105,7 @@ export class Zone extends Container {
     }
 
     public buildFurniture({ x, y, type, uuid }): void {
-        if (this.isCompleted) return;
+        if (this._isCompleted) return;
 
         this.chosenItemId = uuid;
         const texture = Images[`interior/zone_${this.zoneNumber}_${type}`];
@@ -151,13 +162,13 @@ export class Zone extends Container {
         this.buttons.position.set(x, y);
         this.buttons.scale.set(1.2);
         this.buttons.on('ok', () => {
-            if (this.isCompleted) return;
+            if (this._isCompleted) return;
             this.emitParticles();
             lego.event.emit(BoardEvents.OkClick, this.chosenItemId);
         });
 
         this.buttons.on('no', () => {
-            if (this.isCompleted) return;
+            if (this._isCompleted) return;
             lego.event.emit(BoardEvents.NoClick);
         });
         this.buttons.alpha = 0;

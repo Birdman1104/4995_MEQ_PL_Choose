@@ -1,13 +1,14 @@
 import { lego } from '@armathai/lego';
 import { BoardState } from '../models/BoardModel';
 import Head from '../models/HeadModel';
-import { setBoardStateCommand } from './Commands';
+import { restartHintCommand, setBoardStateCommand } from './Commands';
 
 export const onZoneClickedCommand = (zoneNumber: number) => {
     Head.gameModel?.board?.selectZone(zoneNumber);
 };
 
 export const onCardClickCommand = (uuid: string) => {
+    lego.command.execute(restartHintCommand);
     Head.gameModel?.board?.updateSelectedItem(uuid);
 };
 
@@ -20,4 +21,8 @@ export const onOkClickCommand = (uuid: string) => {
 };
 export const onNoClickCommand = () => {
     Head.gameModel?.board?.noClick();
+};
+
+export const onCarouselUpdateCommand = () => {
+    lego.command.execute(restartHintCommand);
 };

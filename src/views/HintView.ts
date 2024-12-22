@@ -3,7 +3,7 @@ import anime from 'animejs';
 import { Container, Point, Sprite } from 'pixi.js';
 import { Images } from '../assets';
 import { HintModelEvents } from '../events/ModelEvents';
-import { makeSprite } from '../utils';
+import { getViewByProperty, makeSprite } from '../utils';
 
 export class HintView extends Container {
     private hand: Sprite;
@@ -43,6 +43,8 @@ export class HintView extends Container {
     private show(): void {
         this.removeTweens();
         this.hintPositions = this.getHintPosition();
+        console.warn(this.hintPositions);
+
         this.currentPoint = 0;
 
         this.showFirstTime();
@@ -55,7 +57,7 @@ export class HintView extends Container {
 
     private showFirstTime(): void {
         const point = this.hintPositions[this.currentPoint];
-        this.hand.scale.set(0.8);
+        this.hand.scale.set(0.6);
         this.hand.alpha = 1;
         this.hand.position.set(point.x, point.y);
         this.hand.angle = 0;
@@ -67,14 +69,14 @@ export class HintView extends Container {
     private pointHand(): void {
         anime({
             targets: this.hand.scale,
-            x: 0.6,
-            y: 0.6,
+            x: 0.4,
+            y: 0.4,
             duration: 500,
             easing: 'easeInOutCubic',
             direction: 'alternate',
             complete: () => {
                 this.currentPoint += 1;
-                this.currentPoint = this.hintPositions.length % this.currentPoint;
+                this.currentPoint = this.currentPoint % this.hintPositions.length;
                 this.moveHand(this.hintPositions[this.currentPoint]);
             },
         });
@@ -97,6 +99,11 @@ export class HintView extends Container {
     }
 
     private getHintPosition(): Point[] {
-        return [new Point(0, 0)];
+        const board = getViewByProperty('viewName', 'BoardView');
+        if (!board) {
+            return [new Point(0, 0)];
+        }
+
+        return board.getHintPositions();
     }
 }

@@ -128,9 +128,13 @@ export const onGameStateUpdateCommand = (state: GameState): void => {
 };
 
 export const onBoardStateUpdateCommand = (state: BoardState): void => {
+    lego.command.execute(restartHintCommand);
     switch (state) {
         case BoardState.ClickOnRoom:
             Head.gameModel?.board?.initializeZones();
+            break;
+        case BoardState.Complete:
+            lego.command.execute(destroyHintModelCommand);
             break;
 
         default:
@@ -161,4 +165,17 @@ export const takeToStoreCommand = (): void => {
     // } else {
     //     window.installCTA();
     // }
+};
+
+export const restartHintCommand = (): void => {
+    lego.command
+        //
+        .guard(hintModelGuard)
+        .execute(hideHintCommand)
+
+        .guard(hintModelGuard)
+        .execute(stopHintVisibilityTimerCommand)
+
+        .guard(hintModelGuard)
+        .execute(startHintVisibilityTimerCommand);
 };
