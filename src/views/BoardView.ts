@@ -108,8 +108,13 @@ export class BoardView extends Container {
     }
 
     private buildBkg(): void {
-        this.bkg = makeSprite({ texture: Images['game/bkg'] });
-        this.addChild(this.bkg);
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++) {
+                const bkg = makeSprite({ texture: Images[`game/bkg${j + 1}${i + 1}`] });
+                bkg.position.set(i * (bkg.width - 1) - bkg.width / 2, j * (bkg.height - 1) - bkg.height / 2);
+                this.addChild(bkg);
+            }
+        }
     }
 
     private buildLocks(): void {
