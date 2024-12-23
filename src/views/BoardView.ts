@@ -11,7 +11,7 @@ import { BoardModelEvents, ZoneModelEvents } from '../events/ModelEvents';
 import { BoardState } from '../models/BoardModel';
 import { ItemModel } from '../models/ItemModel';
 import { ZoneModel } from '../models/ZoneModel';
-import { bringToFront, getGameBounds, getViewByProperty, lp, makeSprite } from '../utils';
+import { bringToFront, getGameBounds, getViewByProperty, isSquareLikeScreen, lp, makeSprite } from '../utils';
 import { Lock, LockArea } from './Lock';
 import { SecondRoom } from './SecondRoom';
 import { Zone } from './Zone';
@@ -28,6 +28,24 @@ const BOUNDS_P = {
     y: -200,
     w: 400,
     h: 400,
+};
+
+const BOUNDS_L_S = {
+    x: -150,
+    y: -150,
+    w: 300,
+    h: 300,
+};
+
+const BOUNDS_P_S = {
+    x: -250,
+    y: -250,
+    w: 500,
+    h: 500,
+};
+
+const getBounds = () => {
+    return isSquareLikeScreen() ? lp(BOUNDS_L_S, BOUNDS_P_S) : lp(BOUNDS_L, BOUNDS_P);
 };
 
 export class BoardView extends Container {
@@ -66,7 +84,7 @@ export class BoardView extends Container {
     }
 
     public getBounds(): Rectangle {
-        const { x, y, w, h } = lp(BOUNDS_L, BOUNDS_P);
+        const { x, y, w, h } = getBounds();
         return new Rectangle(x, y, w, h);
     }
 

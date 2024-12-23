@@ -1,5 +1,5 @@
 import { CellScale } from '@armathai/pixi-grid';
-import { lp } from '../../utils';
+import { isSquareLikeScreen, lp } from '../../utils';
 
 export const getGameViewGridConfig = () => {
     return lp(getGameViewGridLandscapeConfig, getGameViewGridPortraitConfig).call(null);
@@ -63,6 +63,30 @@ const getGameViewGridLandscapeConfig = () => {
 
 const getGameViewGridPortraitConfig = () => {
     const bounds = { x: 0, y: 0, width: document.body.clientWidth, height: document.body.clientHeight };
+    const isSquare = isSquareLikeScreen();
+
+    const zone_5 = isSquare
+        ? {
+              name: 'zone_5',
+              scale: CellScale.showAll,
+              bounds: { x: -0.2, y: -0.2, width: 1.4, height: 1.1 },
+          }
+        : {
+              name: 'zone_5',
+              scale: CellScale.showAll,
+              bounds: { x: -0.2, y: -0.3, width: 1.4, height: 1.3 },
+          };
+    const zone_1 = isSquare
+        ? {
+              name: 'zone_1',
+              scale: CellScale.showAll,
+              bounds: { x: 0.1625, y: -0.125, width: 1.1, height: 1.1 },
+          }
+        : {
+              name: 'zone_1',
+              scale: CellScale.showAll,
+              bounds: { x: 0.15, y: -0.15, width: 1.3, height: 1.3 },
+          };
 
     return {
         name: 'game',
@@ -89,11 +113,7 @@ const getGameViewGridPortraitConfig = () => {
                 scale: CellScale.showAll,
                 bounds: { x: 0, y: 0, width: 1, height: 1 },
             },
-            {
-                name: 'zone_1',
-                scale: CellScale.showAll,
-                bounds: { x: 0.15, y: -0.15, width: 1.3, height: 1.3 },
-            },
+            zone_1,
             {
                 name: 'zone_2',
                 scale: CellScale.showAll,
@@ -109,11 +129,7 @@ const getGameViewGridPortraitConfig = () => {
                 scale: CellScale.showAll,
                 bounds: { x: -0.11, y: -0.2, width: 1.4, height: 1.3 },
             },
-            {
-                name: 'zone_5',
-                scale: CellScale.showAll,
-                bounds: { x: -0.2, y: -0.3, width: 1.4, height: 1.3 },
-            },
+            zone_5,
         ],
     };
 };
