@@ -46,7 +46,5 @@ export const shortVersionCompleteGuard = (): boolean => {
 };
 
 export const longVersionCompleteGuard = (): boolean => {
-    console.warn(Head.gameModel?.board?.zones.filter((zone) => zone.completed).length === 4);
-
     return GAME_CONFIG.version === GV.long && Head.gameModel?.board?.state === BoardState.Complete;
 };

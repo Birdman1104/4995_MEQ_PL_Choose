@@ -43,7 +43,6 @@ export class SecondRoom extends Container {
                 easing: 'linear',
                 delay: i * 50,
                 changeBegin: () => {
-                    console.log('begin');
                     this.emitters.push(
                         new Emitter(this, [Texture.from(Images['game/smoke'])], getBubbleParticlesConfig(f.x, f.y)),
                     );

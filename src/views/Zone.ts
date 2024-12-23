@@ -3,7 +3,7 @@ import anime from 'animejs';
 import { Emitter } from 'pixi-particles';
 import { Container, Graphics, Point, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
-import { circleParticleConfig, getSplashParticlesConfig } from '../configs/particlesConfig';
+import { getCircleParticleConfig, getSplashParticlesConfig } from '../configs/particlesConfig';
 import { getFurnitureSpriteConfig, getLineSpriteConfig, plusSpriteConfig } from '../configs/spriteConfigs';
 import { ButtonPositions, ZONE_HIT_AREA, ZONE_PARTICLE_CONFIG } from '../configs/zonesConfig';
 import { BoardEvents } from '../events/MainEvents';
@@ -187,10 +187,10 @@ export class Zone extends Container {
         this.addChild(this.plus);
     }
 
-    private emitParticles(): void {
+    public emitParticles(): void {
         const { x, y, w, h } = ZONE_PARTICLE_CONFIG[this.zoneNumber];
         this.emitters.push(
-            new Emitter(this.particleContainer, [Texture.from(Images['game/particle'])], circleParticleConfig),
+            new Emitter(this.particleContainer, [Texture.from(Images['game/particle'])], getCircleParticleConfig(0, 0)),
         );
         this.emitters.push(
             new Emitter(

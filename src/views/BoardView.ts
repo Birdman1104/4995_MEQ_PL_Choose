@@ -1,8 +1,10 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
+import { Emitter } from 'pixi-particles';
 import { Container, NineSlicePlane, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { EXTERIOR_ITEMS } from '../configs/exteriorConfig';
+import { getCircleParticleConfig, getSplashParticlesConfig } from '../configs/particlesConfig';
 import { LOCKS } from '../configs/zonesConfig';
 import { BoardEvents } from '../events/MainEvents';
 import { BoardModelEvents, ZoneModelEvents } from '../events/ModelEvents';
@@ -36,6 +38,7 @@ export class BoardView extends Container {
     private overlay: NineSlicePlane;
     private fullFence: Sprite;
     private secondRoom: SecondRoom;
+    private emitters: Emitter[] = [];
 
     constructor() {
         super();
@@ -57,6 +60,7 @@ export class BoardView extends Container {
     public update(dt): void {
         this.zones.forEach((z) => z?.update(dt));
         this.secondRoom?.update(dt);
+        this.emitters?.forEach((emitter) => emitter?.update(dt));
     }
 
     public getBounds(): Rectangle {
@@ -201,7 +205,6 @@ export class BoardView extends Container {
     }
 
     private onBoardStateUpdate(state: BoardState): void {
-        console.warn(BoardState[state]);
         this.state = state;
         if (state === BoardState.Complete) {
             this.showFullFence();
@@ -209,6 +212,7 @@ export class BoardView extends Container {
     }
 
     private showFullFence(): void {
+        this.emitParticles();
         anime({
             targets: this.fullFence,
             alpha: 1,
@@ -222,6 +226,44 @@ export class BoardView extends Container {
                 });
             },
         });
+    }
+
+    private emitParticles(): void {
+        this.zones.forEach((z) => {
+            z.emitParticles();
+        });
+        this.emitters.push(
+            new Emitter(this, [Texture.from(Images['game/particle'])], getCircleParticleConfig(-170, 100)),
+        );
+        // for(let i = )
+        this.emitters.push(
+            new Emitter(
+                this,
+                [Texture.from(Images['game/spark'])],
+                getSplashParticlesConfig(-150, 100, 50, 50, '4dc934'),
+            ),
+        );
+        this.emitters.push(
+            new Emitter(
+                this,
+                [Texture.from(Images['game/spark'])],
+                getSplashParticlesConfig(-200, 70, 60, 60, 'c934a6'),
+            ),
+        );
+        this.emitters.push(
+            new Emitter(
+                this,
+                [Texture.from(Images['game/spark'])],
+                getSplashParticlesConfig(-125, 120, 50, 50, 'd49d08'),
+            ),
+        );
+        this.emitters.push(
+            new Emitter(
+                this,
+                [Texture.from(Images['game/spark'])],
+                getSplashParticlesConfig(-240, 60, 50, 50, 'd49d08'),
+            ),
+        );
     }
 
     private sortZonesByDefault(): void {
@@ -244,7 +286,6 @@ export class BoardView extends Container {
         this.addChild(hand);
         let currentPoint = 0;
         const hintPositions = [this.locks.find((l) => l.area === LockArea.Storage)!.position];
-        console.warn(hintPositions);
 
         const moveHand = (pos): void => {
             anime({

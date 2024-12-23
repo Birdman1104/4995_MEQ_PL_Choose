@@ -73,8 +73,6 @@ export class GameView extends PixiGrid {
 
     private onSelectedZoneNumberUpdate(zoneNumber: number): void {
         const cell = zoneNumber === -1 ? 'board' : `zone_${zoneNumber}`;
-        console.warn('CELL', cell);
-
         tweenToCell(this, this.board, cell);
     }
 }
