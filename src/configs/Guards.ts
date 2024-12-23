@@ -38,3 +38,6 @@ export const isTutorialModeGuard = (): boolean => {
     return !!Head.gameModel?.isTutorial;
 };
 
+export const clickedReachedGuard = (): boolean => {
+    return GAME_CONFIG.version === 'short' && Head.gameModel?.madeClicks === 2;
+};

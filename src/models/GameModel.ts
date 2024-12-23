@@ -11,6 +11,8 @@ export class GameModel extends ObservableModel {
     private _board: BoardModel | null = null;
     private _isTutorial: boolean = false;
 
+    private _madeClicks = 0;
+
     constructor() {
         super('GameModel');
 
@@ -40,6 +42,14 @@ export class GameModel extends ObservableModel {
 
     set board(value: BoardModel) {
         this._board = value;
+    }
+
+    get madeClicks(): number {
+        return this._madeClicks;
+    }
+
+    public incrementClicks(): void {
+        this._madeClicks++;
     }
 
     public setState(state: GameState): void {

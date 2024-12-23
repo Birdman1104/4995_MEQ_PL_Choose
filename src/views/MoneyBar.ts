@@ -1,6 +1,6 @@
 import { Container, NineSlicePlane, Point, Sprite, Text, Texture } from 'pixi.js';
 import { Images } from '../assets';
-import { makeSprite } from '../utils';
+import { delayRunnable, makeSprite } from '../utils';
 
 export class MoneyBar extends Container {
     private bkg: NineSlicePlane;
@@ -14,9 +14,12 @@ export class MoneyBar extends Container {
     }
 
     public updateMoney(value: number): void {
-        this.value.text = value.toString();
         this.value.style.fontFamily = 'MyCustomFont';
-        this.value.updateText(false);
+        this.value.text = value.toString();
+        delayRunnable(0.05, () => {
+            this.value.text = '';
+            this.value.text = value.toString();
+        });
     }
 
     private build(): void {
