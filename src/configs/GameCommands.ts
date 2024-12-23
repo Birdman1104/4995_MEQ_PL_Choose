@@ -2,12 +2,15 @@ import { lego } from '@armathai/lego';
 import { BoardState } from '../models/BoardModel';
 import Head from '../models/HeadModel';
 import { restartHintCommand, setBoardStateCommand, takeToStoreCommand } from './Commands';
-import { clickedReachedGuard } from './Guards';
+import { clickedReachedGuard, lastRoomGuard } from './Guards';
 
 export const onZoneClickedCommand = (zoneNumber: number) => {
     lego.command
 
         .guard(clickedReachedGuard)
+        .execute(takeToStoreCommand)
+
+        .guard(lastRoomGuard)
         .execute(takeToStoreCommand)
 
         .guard(lego.not(clickedReachedGuard))
