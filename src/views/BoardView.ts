@@ -1,6 +1,5 @@
 import { lego } from '@armathai/lego';
 import anime from 'animejs';
-import { Emitter } from 'pixi-particles';
 import { Container, NineSlicePlane, Point, Rectangle, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { EXTERIOR_ITEMS } from '../configs/exteriorConfig';
@@ -12,6 +11,7 @@ import { ItemModel } from '../models/ItemModel';
 import { ZoneModel } from '../models/ZoneModel';
 import { bringToFront, getGameBounds, getViewByProperty, lp, makeSprite } from '../utils';
 import { Lock, LockArea } from './Lock';
+import { SecondRoom } from './SecondRoom';
 import { Zone } from './Zone';
 
 const BOUNDS_L = {
@@ -30,13 +30,12 @@ const BOUNDS_P = {
 
 export class BoardView extends Container {
     private state: BoardState;
-    private bkg: Sprite;
     private zones: Zone[] = [];
     private selectedZone: Zone | null = null;
     private locks: Lock[] = [];
     private overlay: NineSlicePlane;
     private fullFence: Sprite;
-    private emitter: Emitter;
+    private secondRoom: SecondRoom;
 
     constructor() {
         super();
@@ -101,6 +100,7 @@ export class BoardView extends Container {
 
     private build(): void {
         this.buildBkg();
+        this.buildSecondRoom();
         this.buildLocks();
         this.buildEmptyFence();
         this.buildFullFence();
@@ -115,6 +115,12 @@ export class BoardView extends Container {
                 this.addChild(bkg);
             }
         }
+    }
+
+    private buildSecondRoom(): void {
+        this.secondRoom = new SecondRoom();
+        this.secondRoom.position.set(150, -100);
+        this.addChild(this.secondRoom);
     }
 
     private buildLocks(): void {

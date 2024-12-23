@@ -134,7 +134,7 @@ export const onBoardStateUpdateCommand = (state: BoardState): void => {
             Head.gameModel?.board?.initializeZones();
             break;
         case BoardState.Complete:
-            lego.command.execute(destroyHintModelCommand);
+            lego.command.execute(destroyHintModelCommand).execute(showCtaCommand);
             break;
 
         default:

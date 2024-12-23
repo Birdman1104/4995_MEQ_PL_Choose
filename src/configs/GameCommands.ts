@@ -2,7 +2,7 @@ import { lego } from '@armathai/lego';
 import { BoardState } from '../models/BoardModel';
 import Head from '../models/HeadModel';
 import { restartHintCommand, setBoardStateCommand, takeToStoreCommand } from './Commands';
-import { lastRoomGuard, shortVersionCompleteGuard } from './Guards';
+import { longVersionCompleteGuard, shortVersionCompleteGuard } from './Guards';
 
 export const onZoneClickedCommand = (zoneNumber: number) => {
     lego.command
@@ -10,7 +10,7 @@ export const onZoneClickedCommand = (zoneNumber: number) => {
         .guard(shortVersionCompleteGuard)
         .execute(takeToStoreCommand)
 
-        .guard(lastRoomGuard)
+        .guard(longVersionCompleteGuard)
         .execute(takeToStoreCommand)
 
         .guard(lego.not(shortVersionCompleteGuard))

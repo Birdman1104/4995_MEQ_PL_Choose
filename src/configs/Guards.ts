@@ -1,4 +1,5 @@
 import { AdStatus } from '../models/AdModel';
+import { BoardState } from '../models/BoardModel';
 import Head from '../models/HeadModel';
 import { GAME_CONFIG, GV } from './GameConfig';
 
@@ -44,10 +45,8 @@ export const shortVersionCompleteGuard = (): boolean => {
     );
 };
 
-export const lastRoomGuard = (): boolean => {
+export const longVersionCompleteGuard = (): boolean => {
     console.warn(Head.gameModel?.board?.zones.filter((zone) => zone.completed).length === 4);
 
-    return (
-        GAME_CONFIG.version === GV.long && Head.gameModel?.board?.zones.filter((zone) => zone.completed).length === 4
-    );
+    return GAME_CONFIG.version === GV.long && Head.gameModel?.board?.state === BoardState.Complete;
 };
