@@ -34,23 +34,23 @@ const getGameViewGridLandscapeConfig = () => {
             },
             {
                 name: 'zone_1',
-                scale: CellScale.fit,
-                bounds: { x: 0, y: -0.25, width: 1.2, height: 1.4 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.3, y: 0.1, width: 0.6, height: 0.75 },
             },
             {
                 name: 'zone_2',
-                scale: CellScale.fit,
-                bounds: { x: -0.25, y: -0.25, width: 1.4, height: 1.4 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.1, y: 0.15, width: 0.7, height: 0.7 },
             },
             {
                 name: 'zone_3',
-                scale: CellScale.fit,
-                bounds: { x: -0.37, y: -0.3, width: 1.5, height: 1.4 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.1, y: 0, width: 0.6, height: 0.8 },
             },
             {
                 name: 'zone_4',
-                scale: CellScale.fit,
-                bounds: { x: -0.2, y: -0.25, width: 1.4, height: 1.4 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.2, y: 0, width: 0.7, height: 0.8 },
             },
             {
                 name: 'zone_5',
