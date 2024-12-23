@@ -75,22 +75,10 @@ export class Zone extends Container {
 
     public complete(): void {
         this._isCompleted = true;
-        console.error('splash particles');
         this.interactiveArea.destroy();
         this.hideLine();
         this.hideButtons();
     }
-
-    // public emitParticles(): void {
-    //     if (!this.particleContainer) {
-    //         // const { rotation, x, y, w, h } = ZONE_PARTICLE_CONFIG[this.zoneNumber];
-    //         // const gr = new Graphics();
-    //         // gr.beginFill(0xff0000, 0.3);
-    //         // gr.drawRect(x, y, w, h);
-    //         // gr.endFill();
-    //         // this.addChild(gr);
-    //     }
-    // }
 
     public removeFurniture(): void {
         this._isCompleted = false;
@@ -202,12 +190,7 @@ export class Zone extends Container {
     private emitParticles(): void {
         const { x, y, w, h } = ZONE_PARTICLE_CONFIG[this.zoneNumber];
         this.emitters.push(
-            new Emitter(
-                this.particleContainer,
-                [Texture.from(Images['game/particle'])],
-                circleParticleConfig,
-                // getItemPuttingParticlesConfig(x, y, w, h, rotation),
-            ),
+            new Emitter(this.particleContainer, [Texture.from(Images['game/particle'])], circleParticleConfig),
         );
         this.emitters.push(
             new Emitter(

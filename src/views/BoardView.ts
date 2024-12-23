@@ -56,6 +56,7 @@ export class BoardView extends Container {
 
     public update(dt): void {
         this.zones.forEach((z) => z?.update(dt));
+        this.secondRoom?.update(dt);
     }
 
     public getBounds(): Rectangle {
@@ -204,6 +205,7 @@ export class BoardView extends Container {
         this.state = state;
         if (state === BoardState.Complete) {
             this.showFullFence();
+            this.secondRoom.reveal();
         }
     }
 
