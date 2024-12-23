@@ -59,11 +59,13 @@ export class GameView extends PixiGrid {
         switch (state) {
             case BoardState.Idle:
             case BoardState.ClickOnRoom:
-            case BoardState.Complete:
                 tweenToCell(this, this.board, 'board');
                 break;
             case BoardState.Intro:
                 tweenToCell(this, this.board, 'intro');
+                break;
+            case BoardState.Complete:
+                tweenToCell(this, this.board, 'complete');
                 break;
 
             default:

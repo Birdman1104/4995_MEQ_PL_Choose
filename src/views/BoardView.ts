@@ -17,17 +17,17 @@ import { SecondRoom } from './SecondRoom';
 import { Zone } from './Zone';
 
 const BOUNDS_L = {
-    x: -300,
-    y: -300,
-    w: 600,
-    h: 600,
+    x: -150,
+    y: -150,
+    w: 300,
+    h: 300,
 };
 
 const BOUNDS_P = {
-    x: -300,
-    y: -600,
-    w: 600,
-    h: 1000,
+    x: -200,
+    y: -200,
+    w: 400,
+    h: 400,
 };
 
 export class BoardView extends Container {
@@ -51,6 +51,8 @@ export class BoardView extends Container {
             .on(BoardModelEvents.ZonesUpdate, this.onZonesUpdate, this);
 
         this.build();
+
+        // drawBounds(this);
     }
 
     get viewName() {

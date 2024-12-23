@@ -18,14 +18,19 @@ const getGameViewGridLandscapeConfig = () => {
                 bounds: { x: 0.1, y: 0.1, width: 0.8, height: 0.8 },
             },
             {
+                name: 'complete',
+                scale: CellScale.envelop,
+                bounds: { x: 0, y: 0, width: 1, height: 1 },
+            },
+            {
                 name: 'intro',
-                scale: CellScale.fit,
-                bounds: { x: 0.1, y: 0.1, width: 0.8, height: 0.8 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.3, y: 0.3, width: 0.4, height: 0.4 },
             },
             {
                 name: 'board',
-                scale: CellScale.fit,
-                bounds: { x: 0, y: 0, width: 1, height: 1 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.2, y: 0.2, width: 0.6, height: 0.6 },
             },
             {
                 name: 'zone_1',
@@ -49,8 +54,8 @@ const getGameViewGridLandscapeConfig = () => {
             },
             {
                 name: 'zone_5',
-                scale: CellScale.fit,
-                bounds: { x: -0.2, y: -0.3, width: 1.4, height: 1.4 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.15, y: -0.03, width: 0.7, height: 0.7 },
             },
         ],
     };
@@ -66,42 +71,47 @@ const getGameViewGridPortraitConfig = () => {
         cells: [
             {
                 name: 'initial_cell',
-                scale: CellScale.none,
-                bounds: { x: 0.3, y: 0.4, width: 0.4, height: 0.2 },
+                scale: CellScale.envelop,
+                bounds: { x: 0.3, y: 0.3, width: 0.4, height: 0.4 },
+            },
+            {
+                name: 'complete',
+                scale: CellScale.showAll,
+                bounds: { x: 0.15, y: 0.1, width: 0.7, height: 0.8 },
             },
             {
                 name: 'intro',
                 scale: CellScale.fit,
-                bounds: { x: 0.1, y: 0.1, width: 0.8, height: 0.8 },
+                bounds: { x: 0.125, y: 0.075, width: 0.8, height: 0.8 },
             },
             {
                 name: 'board',
-                scale: CellScale.fit,
+                scale: CellScale.showAll,
                 bounds: { x: 0, y: 0, width: 1, height: 1 },
             },
             {
                 name: 'zone_1',
-                scale: CellScale.fit,
-                bounds: { x: -0.05, y: -0.2, width: 1.5, height: 1.3 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.15, y: -0.15, width: 1.3, height: 1.3 },
             },
             {
                 name: 'zone_2',
-                scale: CellScale.fit,
-                bounds: { x: -0.25, y: -0.25, width: 1.4, height: 1.3 },
+                scale: CellScale.showAll,
+                bounds: { x: -0.25, y: -0.15, width: 1.3, height: 1.3 },
             },
             {
                 name: 'zone_3',
-                scale: CellScale.fit,
-                bounds: { x: -0.4, y: -0.3, width: 1.4, height: 1.3 },
+                scale: CellScale.showAll,
+                bounds: { x: -0.45, y: -0.2, width: 1.2, height: 1.3 },
             },
             {
                 name: 'zone_4',
-                scale: CellScale.fit,
-                bounds: { x: -0.2, y: -0.25, width: 1.4, height: 1.3 },
+                scale: CellScale.showAll,
+                bounds: { x: -0.11, y: -0.2, width: 1.4, height: 1.3 },
             },
             {
                 name: 'zone_5',
-                scale: CellScale.fit,
+                scale: CellScale.showAll,
                 bounds: { x: -0.2, y: -0.3, width: 1.4, height: 1.3 },
             },
         ],
