@@ -1,7 +1,7 @@
 import anime from 'animejs';
-import { Container, Point, Sprite } from 'pixi.js';
+import { Container, Point, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
-import { makeSprite } from '../utils';
+import { callIfExists, makeSprite } from '../utils';
 
 export enum LockArea {
     MainRoom,
@@ -31,6 +31,17 @@ export class Lock extends Container {
             alpha: 0,
             duration: 200,
             easing: 'linear',
+        });
+    }
+
+    public showPlusSign(cb?): void {
+        this.icon.texture = Texture.from(Images['ui/plus']);
+        anime({
+            targets: this.icon,
+            alpha: 1,
+            duration: 200,
+            easing: 'linear',
+            complete: () => callIfExists(cb),
         });
     }
 

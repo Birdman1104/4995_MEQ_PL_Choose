@@ -205,7 +205,6 @@ export class BoardView extends Container {
         this.state = state;
         if (state === BoardState.Complete) {
             this.showFullFence();
-            this.secondRoom.reveal();
         }
     }
 
@@ -215,6 +214,13 @@ export class BoardView extends Container {
             alpha: 1,
             duration: 500,
             easing: 'easeInOutSine',
+            complete: () => {
+                this.locks.find((l) => l.area === LockArea.Storage)?.hideSign();
+
+                this.secondRoom.reveal(() => {
+                    this.locks.find((l) => l.area === LockArea.Storage)?.showPlusSign(() => this.showHint());
+                });
+            },
         });
     }
 
@@ -230,5 +236,54 @@ export class BoardView extends Container {
         this.overlay.width = w;
         this.overlay.height = h;
         this.overlay.position.set(-w / 2, -h / 2);
+    }
+
+    private showHint() {
+        const hand = makeSprite({ texture: Images['game/hand'] });
+        hand.anchor.set(0);
+        this.addChild(hand);
+        let currentPoint = 0;
+        const hintPositions = [this.locks.find((l) => l.area === LockArea.Storage)!.position];
+        console.warn(hintPositions);
+
+        const moveHand = (pos): void => {
+            anime({
+                targets: hand,
+                x: pos.x + 5,
+                y: pos.y + 5,
+                duration: 500,
+                easing: 'easeInOutCubic',
+                complete: () => pointHand(),
+            });
+        };
+
+        const pointHand = (): void => {
+            anime({
+                targets: hand.scale,
+                x: 0.4,
+                y: 0.4,
+                duration: 500,
+                easing: 'easeInOutCubic',
+                direction: 'alternate',
+                complete: () => {
+                    currentPoint += 1;
+                    currentPoint = currentPoint % hintPositions.length;
+                    moveHand(hintPositions[currentPoint]);
+                },
+            });
+        };
+
+        const showFirstTime = (): void => {
+            const point = hintPositions[currentPoint];
+            hand.scale.set(0.6);
+            hand.alpha = 1;
+            hand.position.set(point.x + 5, point.y + 5);
+            hand.angle = 0;
+            hand.visible = true;
+
+            pointHand();
+        };
+
+        showFirstTime();
     }
 }

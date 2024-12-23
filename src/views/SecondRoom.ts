@@ -3,7 +3,7 @@ import { Emitter } from 'pixi-particles';
 import { Container, Sprite, Texture } from 'pixi.js';
 import { Images } from '../assets';
 import { getBubbleParticlesConfig } from '../configs/particlesConfig';
-import { makeSprite } from '../utils';
+import { callIfExists, makeSprite } from '../utils';
 
 const config = [
     { x: 0, y: 35 },
@@ -34,7 +34,7 @@ export class SecondRoom extends Container {
         this.emitters?.forEach((emitter) => emitter?.update(dt));
     }
 
-    public reveal(): void {
+    public reveal(cb?): void {
         this.fillings.reverse().forEach((f, i) => {
             anime({
                 targets: f,
@@ -47,6 +47,11 @@ export class SecondRoom extends Container {
                     this.emitters.push(
                         new Emitter(this, [Texture.from(Images['game/smoke'])], getBubbleParticlesConfig(f.x, f.y)),
                     );
+                },
+                complete: () => {
+                    if (i === this.fillings.length - 1) {
+                        callIfExists(cb);
+                    }
                 },
             });
         });
