@@ -2,23 +2,20 @@ import { lego } from '@armathai/lego';
 import { BoardState } from '../models/BoardModel';
 import Head from '../models/HeadModel';
 import { restartHintCommand, setBoardStateCommand, takeToStoreCommand } from './Commands';
-import { clickedReachedGuard, lastRoomGuard } from './Guards';
+import { lastRoomGuard, shortVersionCompleteGuard } from './Guards';
 
 export const onZoneClickedCommand = (zoneNumber: number) => {
     lego.command
 
-        .guard(clickedReachedGuard)
+        .guard(shortVersionCompleteGuard)
         .execute(takeToStoreCommand)
 
         .guard(lastRoomGuard)
         .execute(takeToStoreCommand)
 
-        .guard(lego.not(clickedReachedGuard))
+        .guard(lego.not(shortVersionCompleteGuard))
         .payload(zoneNumber)
-        .execute(selectZoneCommand)
-
-        .guard(lego.not(clickedReachedGuard))
-        .execute(incrementClicksCommand);
+        .execute(selectZoneCommand);
 };
 
 const selectZoneCommand = (zoneNumber: number) => {
@@ -28,16 +25,13 @@ const selectZoneCommand = (zoneNumber: number) => {
 export const onCardClickCommand = (uuid: string) => {
     lego.command
 
-        .guard(clickedReachedGuard)
+        .guard(shortVersionCompleteGuard)
         .execute(takeToStoreCommand)
 
-        .guard(lego.not(clickedReachedGuard))
-        .execute(incrementClicksCommand)
-
-        .guard(lego.not(clickedReachedGuard))
+        .guard(lego.not(shortVersionCompleteGuard))
         .execute(restartHintCommand)
 
-        .guard(lego.not(clickedReachedGuard))
+        .guard(lego.not(shortVersionCompleteGuard))
         .payload(uuid)
         .execute(updateSelectedItem);
 };
@@ -49,13 +43,10 @@ const updateSelectedItem = (uuid: string) => {
 export const onLockClickCommand = () => {
     lego.command
 
-        .guard(clickedReachedGuard)
+        .guard(shortVersionCompleteGuard)
         .execute(takeToStoreCommand)
 
-        .guard(lego.not(clickedReachedGuard))
-        .execute(incrementClicksCommand)
-
-        .guard(lego.not(clickedReachedGuard))
+        .guard(lego.not(shortVersionCompleteGuard))
         .payload(BoardState.ClickOnRoom)
         .execute(setBoardStateCommand);
 };
@@ -69,16 +60,9 @@ export const onNoClickCommand = () => {
 
 export const onCarouselUpdateCommand = () => {
     lego.command
-        .guard(lego.not(clickedReachedGuard))
+        .guard(lego.not(shortVersionCompleteGuard))
         .execute(restartHintCommand)
 
-        .guard(clickedReachedGuard)
-        .execute(takeToStoreCommand)
-
-        .guard(lego.not(clickedReachedGuard))
-        .execute(incrementClicksCommand);
-};
-
-export const incrementClicksCommand = () => {
-    Head.gameModel?.incrementClicks();
+        .guard(shortVersionCompleteGuard)
+        .execute(takeToStoreCommand);
 };

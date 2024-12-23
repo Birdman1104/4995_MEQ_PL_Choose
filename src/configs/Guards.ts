@@ -38,8 +38,10 @@ export const isTutorialModeGuard = (): boolean => {
     return !!Head.gameModel?.isTutorial;
 };
 
-export const clickedReachedGuard = (): boolean => {
-    return GAME_CONFIG.version === GV.short && Head.gameModel?.madeClicks === 2;
+export const shortVersionCompleteGuard = (): boolean => {
+    return (
+        GAME_CONFIG.version === GV.short && Head.gameModel?.board?.zones.filter((zone) => zone.completed).length === 1
+    );
 };
 
 export const lastRoomGuard = (): boolean => {
