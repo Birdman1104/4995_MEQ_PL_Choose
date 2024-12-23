@@ -20,6 +20,14 @@ export class AdModel extends ObservableModel {
 
     private idleTimer: any;
 
+    private _inactivity5s: boolean = false;
+    private _inactivity10s: boolean = false;
+    private _inactivity15s: boolean = false;
+
+    private _inactivityTimer5s: any;
+    private _inactivityTimer10s: any;
+    private _inactivityTimer15s: any;
+
     public constructor() {
         super('AdModel');
 
@@ -110,5 +118,47 @@ export class AdModel extends ObservableModel {
     public stopIdleTimer(): void {
         removeRunnable(this.idleTimer);
         this.idleTimer = null;
+    }
+
+    // INACTIVITY
+
+    get inactivity5s(): boolean {
+        return this._inactivity5s;
+    }
+
+    set inactivity5s(value: boolean) {
+        this._inactivity5s = value;
+    }
+
+    get inactivity10s(): boolean {
+        return this._inactivity10s;
+    }
+
+    set inactivity10s(value: boolean) {
+        this._inactivity10s = value;
+    }
+
+    get inactivity15s(): boolean {
+        return this._inactivity15s;
+    }
+
+    set inactivity15s(value: boolean) {
+        this._inactivity15s = value;
+    }
+
+    public startInactivityTimers(): void {
+        this._inactivityTimer5s = delayRunnable(5, () => (this._inactivity5s = true), this);
+        this._inactivityTimer10s = delayRunnable(10, () => (this._inactivity10s = true), this);
+        this._inactivityTimer15s = delayRunnable(15, () => (this._inactivity15s = true), this);
+    }
+
+    public stopInactivityTimers(): void {
+        removeRunnable(this._inactivityTimer5s);
+        removeRunnable(this._inactivityTimer10s);
+        removeRunnable(this._inactivityTimer15s);
+
+        this._inactivityTimer5s = null;
+        this._inactivityTimer10s = null;
+        this._inactivityTimer15s = null;
     }
 }

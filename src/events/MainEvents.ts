@@ -14,6 +14,7 @@ export const BoardEvents = {
     LockClick: 'BoardEventsLockClick',
     OkClick: 'BoardEventsOkClick',
     NoClick: 'BoardEventsNoClick',
+    BkgClick: 'BoardEventsBkgClick',
 };
 
 export const UIEvents = {

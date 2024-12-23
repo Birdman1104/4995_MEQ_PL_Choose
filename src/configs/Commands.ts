@@ -46,7 +46,17 @@ const initializeModelsCommand = (): void => {
         .execute(startIdleTimerCommand)
 
         .guard(hintParamGuard)
-        .execute(startHintVisibilityTimerCommand);
+        .execute(startHintVisibilityTimerCommand)
+
+        .execute(startInactivityTimerCommand);
+};
+
+export const startInactivityTimerCommand = (): void => {
+    Head.ad?.startInactivityTimers();
+};
+
+export const stopInactivityTimerCommand = (): void => {
+    Head.ad?.stopInactivityTimers();
 };
 
 const hideHintCommand = (): void => {

@@ -6,6 +6,7 @@ interface Window {
     gameReadyCall: () => void;
     CTACallImitation: () => void;
     soundMute: (value: boolean) => void;
+    gtag: (event: string, eventName: string, payload?: any) => void;
 }
 
 type AssetNameAndPath = {

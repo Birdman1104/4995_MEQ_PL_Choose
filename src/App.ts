@@ -2,6 +2,7 @@ import { lego, legoLogger } from '@armathai/lego';
 import { PixiStatsPlugin } from '@armathai/pixi-stats';
 import { Application } from 'pixi.js';
 
+import { AnalyticsController } from './Analytics';
 import PixiStage from './MainStage';
 import { mapCommands } from './configs/EventCommandPairs';
 import { ScreenSizeConfig } from './configs/ScreenSizeConfig';
@@ -29,6 +30,8 @@ class App extends Application {
         this.view.classList.add('app');
         // @ts-ignore
         document.body.appendChild(this.view);
+
+        AnalyticsController.init();
 
         globalThis.__PIXI_APP__ = this;
         if (process.env.NODE_ENV !== 'production') {

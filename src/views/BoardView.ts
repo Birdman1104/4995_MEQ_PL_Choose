@@ -119,6 +119,8 @@ export class BoardView extends Container {
             for (let j = 0; j < 2; j++) {
                 const bkg = makeSprite({ texture: Images[`game/bkg${j + 1}${i + 1}`] });
                 bkg.position.set(i * (bkg.width - 1) - bkg.width / 2, j * (bkg.height - 1) - bkg.height / 2);
+                bkg.interactive = true;
+                bkg.on('pointerdown', () => lego.event.emit(BoardEvents.BkgClick));
                 this.addChild(bkg);
             }
         }

@@ -3,6 +3,9 @@ export const AdModelEvents = {
     CtaUpdate: 'AdModelCtaUpdate',
     SoundUpdate: 'AdModelSoundUpdate',
     HintUpdate: 'AdModelHintUpdate',
+    Inactivity5sUpdate: 'AdModelInactivity5sUpdate',
+    Inactivity10sUpdate: 'AdModelInactivity10sUpdate',
+    Inactivity15sUpdate: 'AdModelInactivity15sUpdate',
 };
 
 export const BoardModelEvents = {
