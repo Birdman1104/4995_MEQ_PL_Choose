@@ -1,11 +1,13 @@
 import { lego } from '@armathai/lego';
 import { Howl } from 'howler';
 import { BoardEvents, MainGameEvents, UIEvents } from './events/MainEvents';
-import { SoundModelEvents } from './events/ModelEvents';
+import { BoardModelEvents, SoundModelEvents } from './events/ModelEvents';
+import { BoardState } from './models/BoardModel';
 import { SoundState } from './models/SoundModel';
 import { CLICK_SOUND } from './sounds/click';
 import { ITEM_SOUND } from './sounds/itemPut';
 import { swoosh } from './sounds/swoosh';
+import { THEME } from './sounds/theme';
 
 class SoundControl {
     private sounds: { [key: string]: Howl };
@@ -22,6 +24,7 @@ class SoundControl {
             .on(BoardEvents.OkClick, this.playOk, this)
             .on(BoardEvents.NoClick, this.playClick, this)
             .on(UIEvents.CardClick, this.playClick, this)
+            .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this)
             .on(UIEvents.CarouselUpdate, this.playSwoosh, this);
     }
 
@@ -29,6 +32,7 @@ class SoundControl {
         this.sounds.click = new Howl({ src: CLICK_SOUND });
         this.sounds.item = new Howl({ src: ITEM_SOUND });
         this.sounds.swoosh = new Howl({ src: swoosh });
+        this.sounds.theme = new Howl({ src: THEME, loop: true });
     }
 
     private playClick(): void {
@@ -41,6 +45,16 @@ class SoundControl {
 
     private playSwoosh(): void {
         this.sounds.swoosh.play();
+    }
+
+    private playTheme(): void {
+        this.sounds.theme.play();
+    }
+
+    private onBoardStateUpdate(state: BoardState): void {
+        if (state === BoardState.Intro) {
+            this.playTheme();
+        }
     }
 
     private focusChange(outOfFocus: boolean): void {

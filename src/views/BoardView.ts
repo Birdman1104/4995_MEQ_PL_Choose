@@ -26,7 +26,7 @@ const BOUNDS_L = {
 const BOUNDS_P = {
     x: -200,
     y: -200,
-    w: 400,
+    w: 375,
     h: 400,
 };
 
