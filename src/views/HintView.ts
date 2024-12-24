@@ -56,7 +56,7 @@ export class HintView extends Container {
 
     private showFirstTime(): void {
         const point = this.hintPositions[this.currentPoint];
-        this.hand.scale.set(0.6);
+        this.hand.scale.set(1);
         this.hand.alpha = 1;
         this.hand.position.set(point.x, point.y);
         this.hand.angle = 0;
@@ -68,8 +68,8 @@ export class HintView extends Container {
     private pointHand(): void {
         anime({
             targets: this.hand.scale,
-            x: 0.4,
-            y: 0.4,
+            x: 0.7,
+            y: 0.7,
             duration: 500,
             easing: 'easeInOutCubic',
             direction: 'alternate',

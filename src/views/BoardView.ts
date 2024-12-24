@@ -96,7 +96,7 @@ export class BoardView extends Container {
         switch (this.state) {
             case BoardState.Intro:
                 const { x, y } = this.toGlobal(new Point(0, 0));
-                return [new Point(x - 10, y + 20)];
+                return [new Point(x, y + 40)];
             case BoardState.ClickOnRoom:
             case BoardState.Idle:
                 const zone = this.zones.reverse().find((z) => !z.isCompleted);
