@@ -22,51 +22,51 @@ export class Analytics {
     }
 
     private onMainViewReady(): void {
-        window.gtag('event', 'start');
+        window.gtag('event', 'Start');
     }
 
     private onSoundToggle(value: SoundState): void {
         const paylaod = {
             sound: value === SoundState.On ? 'on' : 'off',
         };
-        window.gtag('event', 'soundToggle', paylaod);
+        window.gtag('event', 'Sound', paylaod);
     }
 
     private onLockClick(): void {
         if (!this.firstInteraction) {
             this.firstInteraction = true;
-            window.gtag('event', 'firstInteraction', { target: 'lock' });
+            window.gtag('event', 'First Interaction');
         }
     }
 
     private onBkgClick(): void {
         if (!this.firstInteraction) {
             this.firstInteraction = true;
-            window.gtag('event', 'firstInteraction', { target: 'background' });
+            window.gtag('event', 'First Interaction');
         }
     }
 
     private onTakeMeToStore(): void {
         if (!this.complete) {
             this.complete = true;
-            window.gtag('event', 'complete');
+            window.gtag('event', 'Complete');
         }
     }
 
     private on5sInactivity(value): void {
         if (value) {
-            window.gtag('event', 'inaction5s');
+            window.gtag('event', 'Inaction5s');
         }
     }
 
     private on10sInactivity(value): void {
         if (value) {
-            window.gtag('event', 'inaction10s');
+            window.gtag('event', 'Inaction10s');
         }
     }
     private on15sInactivity(value): void {
         if (value) {
-            window.gtag('event', 'inaction15s');
+            window.gtag('event', 'Inaction15s');
         }
     }
 }
