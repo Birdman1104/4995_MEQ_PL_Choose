@@ -19,8 +19,8 @@ const getGameViewGridLandscapeConfig = () => {
             },
             {
                 name: 'complete',
-                scale: CellScale.envelop,
-                bounds: { x: 0, y: 0, width: 1, height: 1 },
+                scale: CellScale.showAll,
+                bounds: { x: 0.3, y: 0.3, width: 0.4, height: 0.4 },
             },
             {
                 name: 'intro',
