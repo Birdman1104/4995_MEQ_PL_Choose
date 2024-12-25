@@ -8,6 +8,7 @@ import { CLICK_SOUND } from './sounds/click';
 import { ITEM_SOUND } from './sounds/itemPut';
 import { swoosh } from './sounds/swoosh';
 import { THEME } from './sounds/theme';
+import { WIN } from './sounds/win';
 
 class SoundControl {
     private sounds: { [key: string]: Howl };
@@ -25,6 +26,7 @@ class SoundControl {
             .on(BoardEvents.NoClick, this.playClick, this)
             .on(UIEvents.CardClick, this.playClick, this)
             .on(BoardModelEvents.StateUpdate, this.onBoardStateUpdate, this)
+            .on('playWin', this.playWin, this)
             .on(UIEvents.CarouselUpdate, this.playSwoosh, this);
     }
 
@@ -32,6 +34,7 @@ class SoundControl {
         this.sounds.click = new Howl({ src: CLICK_SOUND });
         this.sounds.item = new Howl({ src: ITEM_SOUND });
         this.sounds.swoosh = new Howl({ src: swoosh });
+        this.sounds.win = new Howl({ src: WIN });
         this.sounds.theme = new Howl({ src: THEME, loop: true });
     }
 
@@ -49,6 +52,10 @@ class SoundControl {
 
     private playTheme(): void {
         this.sounds.theme.play();
+    }
+
+    private playWin(): void {
+        this.sounds.win.play();
     }
 
     private onBoardStateUpdate(state: BoardState): void {

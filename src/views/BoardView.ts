@@ -242,7 +242,7 @@ export class BoardView extends Container {
             easing: 'easeInOutSine',
             complete: () => {
                 this.locks.find((l) => l.area === LockArea.Storage)?.hideSign();
-
+                lego.event.emit('playWin');
                 this.secondRoom.reveal(() => {
                     this.locks.find((l) => l.area === LockArea.Storage)?.showPlusSign(() => this.showHint());
                 });
