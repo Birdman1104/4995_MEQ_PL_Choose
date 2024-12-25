@@ -5,7 +5,7 @@ export const ZONES_POSITIONS = [
     { x: 33, y: -48 }, // square wall
     { x: 138, y: 5 }, // small wall
     { x: -25, y: 25 }, // small floor
-    { x: 10, y: 80 }, // big floor
+    { x: 15, y: 85 }, // big floor
 ];
 
 export const ITEMS_CONFIG = {
