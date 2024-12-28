@@ -21,8 +21,8 @@ export const ITEMS_CONFIG = {
     zone_2_4: { x: 0, y: 0, price: 130 },
     zone_2_5: { x: 0, y: 0, price: 200 },
 
-    zone_3_1: { x: 0, y: 0, price: 100 },
-    zone_3_2: { x: 0, y: 0, price: 50 },
+    zone_3_1: { x: 0, y: 15, price: 100 },
+    zone_3_2: { x: 0, y: 15, price: 50 },
     zone_3_3: { x: -10, y: 15, price: 150 },
     zone_3_4: { x: -10, y: 20, price: 125 },
     zone_3_5: { x: -10, y: 15, price: 75 },

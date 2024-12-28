@@ -83,12 +83,12 @@ export class Carousel extends Container {
     private buildArrows(): void {
         this.rightArrow = makeSprite(getArrowConfig('right'));
         this.rightArrow.interactive = true;
-        this.rightArrow.on('pointerdown', () => this.slideCarousel(1));
+        this.rightArrow.on('pointerdown', () => this.slideCarousel(-1));
         this.addChild(this.rightArrow);
 
         this.leftArrow = makeSprite(getArrowConfig('left'));
         this.leftArrow.interactive = true;
-        this.leftArrow.on('pointerdown', () => this.slideCarousel(-1));
+        this.leftArrow.on('pointerdown', () => this.slideCarousel(1));
         this.addChild(this.leftArrow);
     }
 
