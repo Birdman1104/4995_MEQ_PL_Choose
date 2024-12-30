@@ -111,6 +111,10 @@
           window.soundMute(true);
         }
       }
+
+      window.soundMute = (value) => {
+        window.game.soundMute(value);
+      };
       window.installCTA = () => {
         dapi.openStoreUrl();
       };
