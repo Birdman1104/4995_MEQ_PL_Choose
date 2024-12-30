@@ -295,8 +295,8 @@ export class BoardView extends Container {
 
     private setOverlaySize(): void {
         const { width, height } = getGameBounds();
-        const w = width * 2;
-        const h = height * 2;
+        const w = width * 4;
+        const h = height * 4;
         this.overlay.width = w;
         this.overlay.height = h;
         this.overlay.position.set(-w / 2, -h / 2);

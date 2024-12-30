@@ -4,7 +4,7 @@ export const GV = {
 };
 
 export const GAME_CONFIG = Object.freeze({
-    HintOnIdle: 2, // Seconds
+    HintOnIdle: 2.5, // Seconds
     Hint: true,
     Sound: true,
 
